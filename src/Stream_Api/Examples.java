@@ -36,5 +36,5 @@ namesFilter();
                 .filter(i -> i.matches("^[a-zA-Z]+$"))
                 .forEach(System.out::println);
     }
-
+//hng
 }
