@@ -1,4 +1,4 @@
-package supplier;
+package Stream_Api.supplier;
 
 import java.time.LocalDateTime;
 import java.util.Random;

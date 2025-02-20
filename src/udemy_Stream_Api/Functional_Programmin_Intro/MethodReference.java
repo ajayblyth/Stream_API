@@ -1,4 +1,4 @@
-package udemy_Stream_Api;
+package udemy_Stream_Api.Functional_Programmin_Intro;
 
 import java.util.List;
 
