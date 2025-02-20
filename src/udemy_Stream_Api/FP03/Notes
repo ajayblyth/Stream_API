@@ -1,0 +1,74 @@
+A.PREDICATE
+
+Predicate<T> is a functional interface from java.util.function.
+It represents a boolean-valued function (i.e., a condition check) and has a single abstract method
+
+example:
+public class PredicateExample {
+    public static void main(String[] args) {
+        Predicate<Integer> isEven = num -> num % 2 == 0;
+
+        System.out.println(isEven.test(10));
+        System.out.println(isEven.test(15));
+    }
+
+
+    Key Methods in Predicate
+
+    1. test(T t)	Evaluates the condition and returns true or false
+    2. and(Predicate<T> other)	Combines two predicates using logical AND
+    3. or(Predicate<T> other)	Combines two predicates using logical OR
+     4. negate()	Negates the predicate
+
+
+
+    Example using and(), or(), negate()
+
+    Predicate<Integer> isEven = x -> x % 2 == 0;
+    Predicate<Integer> isGreaterThan10 = x -> x > 10;
+
+    System.out.println(isEven.and(isGreaterThan10).test(12)); // true (even & > 10)
+    System.out.println(isEven.or(isGreaterThan10).test(9));   // false (not even, not > 10)
+    System.out.println(isEven.negate().test(5));              // true (5 is NOT even)
+
+
+B.FUNCTION
+
+ Function<T, R> Functional Interface
+
+Function<T, R> is a functional interface that takes an argument of type T and returns a result of type R.
+It has a single abstract method:
+
+R apply(T t);
+
+methods example:
+
+Function<Integer, Integer> square = x -> x * x;
+Function<Integer, Integer> addTen = x -> x + 10;
+
+System.out.println(square.andThen(addTen).apply(5));  // 25 -> 35
+System.out.println(square.compose(addTen).apply(5));  // 15 -> 225
+
+C.CONSUMER
+
+Consumer<T> is a functional interface that accepts an argument but does not return any result.
+It has a single abstract method:
+void accept(T t);
+
+ Methods in Consumer
+Method	Description
+accept(T t)	Performs an action on the given argument
+andThen(Consumer<T> after)	Chains multiple Consumers
+
+
+
+Example using andThen()
+
+Consumer<Integer> printNumber = num -> System.out.println("Number: " + num);
+Consumer<Integer> squareNumber = num -> System.out.println("Square: " + (num * num));
+
+printNumber.andThen(squareNumber).accept(4);
+
+// Output:
+// Number: 4
+// Square: 16
