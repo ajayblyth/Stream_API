@@ -47,3 +47,25 @@ sharma
 shivam
 sonu
 vicky
+
+
+//comparator
+jshell> name.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println)
+vicky
+sonu
+sonu
+shivam
+sharma
+raj
+ajay
+
+//custom comparing
+'
+jshell> name.stream().sorted(Comparator.comparing(str-> str.length())).forEach(System.out::println)
+raj
+ajay
+sonu
+sonu
+vicky
+sharma
+shivam
