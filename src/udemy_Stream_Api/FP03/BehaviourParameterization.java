@@ -1,8 +1,10 @@
 package udemy_Stream_Api.FP03;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BehaviourParameterization {
@@ -16,11 +18,12 @@ public class BehaviourParameterization {
 //        filterAndPrint(numbers, x -> x%3 ==0);
      List<Integer> squared = mapAndPrint(numbers, x -> x * x);
         List<Integer> doubledNumbers = mapAndPrint(numbers, x -> x + x);
-        List<Integer> cubedNumbers = mapAndPrint(numbers, x -> x * x);
-        System.out.println(squared);
-        System.out.println(doubledNumbers);
+//        List<Integer> cubedNumbers = mapAndPrint(numbers, x -> x * x);
+//        System.out.println(squared);
+//        System.out.println(doubledNumbers);
+//
+//        System.out.println(cubedNumbers);
 
-        System.out.println(cubedNumbers);
 
 
 
