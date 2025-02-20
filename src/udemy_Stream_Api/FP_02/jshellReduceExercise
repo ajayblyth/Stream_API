@@ -1,0 +1,36 @@
+
+jshell> list.of(12,34,56,78,90)
+List<Integer> numbers = list.of(12,34,56,76,54,32)
+|  Error:
+|  cannot find symbol
+|    symbol:   variable list
+|  List<Integer> numbers = list.of(12,34,56,76,54,32);
+|                          ^--^
+
+jshell> |  List<Integer> numbers = List.of(12,34,56,76,54,32);
+|  Error:
+|  illegal start of expression
+|  |  List<Integer> numbers = List.of(12,34,56,76,54,32);
+|  ^
+
+jshell> List<Integer> numbers = List.of(12,34,56,78,98,65)
+numbers ==> [12, 34, 56, 78, 98, 65]
+
+//square and sum
+
+jshell> numbers.stream().map(x-> x*x).reduce(0,(x,y)-> x+y)
+$2 ==> 24349
+
+jshell> numbers.stream().map(x-> x*x).reduce(0,Integer::sum)
+$3 ==> 24349
+
+//cube and sum
+jshell> numbers.stream().map(x-> x*x*x).reduce(0,(x,y)-> x+y)
+$4 ==> 1907017
+
+//odd and sum
+jshell> numbers.stream().filter(x-> x%2 !=0).reduce(0,Integer::sum)
+$5 ==> 65
+//even and sum
+jshell> numbers.stream().filter(x-> x%2 ==0).reduce(0,Integer::sum)
+$6 ==> 278
