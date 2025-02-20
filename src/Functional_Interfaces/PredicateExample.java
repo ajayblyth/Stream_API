@@ -1,5 +1,7 @@
 package Functional_Interfaces;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PredicateExample {
@@ -11,7 +13,8 @@ public class PredicateExample {
         pe.evenOdd();
         stringExample();
         startString();
-        lengthh();
+        filterByLength();
+        filterByNumber();
 
     }
 
@@ -46,13 +49,22 @@ public class PredicateExample {
           }
 
       }
-    public static void lengthh(){
-        Predicate<String> val =  i -> i.length()>=4;
-        Boolean result = val.test("sjay");
-        if(result){
-            System.out.println("length = " + result);
-        }else{
-            System.out.println("length = " + result);
+public static void filterByLength(){
+            List<String> words = Arrays.asList("apple", "banana", "cat", "dog", "elephant");
+
+            Predicate<String> greaterThanThree = x -> x.length() > 3;
+
+
+            words.stream()
+                    .filter(greaterThanThree)
+                    .forEach(System.out::println);
         }
-}}
-//Note: when our logic requires an input which gives a BOOLEAN input then we use predicate
+        public static void filterByNumber(){
+    List<Integer> numbers = Arrays.asList(5, 12, 8, 30, 25, 18, 7);
+
+    Predicate<Integer> greaterThanTen = num -> num > 10;
+
+        numbers.stream().filter(greaterThanTen).forEach(System.out::println);
+}
+}
+
