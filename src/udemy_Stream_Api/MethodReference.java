@@ -4,9 +4,22 @@ import java.util.List;
 
 public class MethodReference {
     public static void main(String[] args) {
-        printAllNumbers(List.of(1,3,4,5,7,3,4));
+        List<Integer> numbers = List.of(1, 3, 4, 5, 7, 3, 8,10);
+//        printAllNumbers(numbers);
+        evenNumber(numbers);
 
     }
+    private static boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+
+    private static void evenNumber(List<Integer> numbers) {
+        numbers.stream().filter(MethodReference::isEven).forEach(System.out::println);
+    }
+
+
+
+
     private static void print(int number){
         System.out.println(number);
     }
