@@ -1,0 +1,7 @@
+Intermediate operations : the operations that are performed on stream and give stream back are called intermediate operations,
+e.g stream, dinstinct, map, filter.
+
+Terminal opertaions: they do not return stream.
+e.g forEach returns void
+reduce - specific type like integer
+collect - list/set/map
