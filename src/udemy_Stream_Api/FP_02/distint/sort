@@ -1,0 +1,49 @@
+jshell> List<Integer> numbers = List.of(12,34,56,76,4,3,2,4,5,5,1,1,89)
+numbers ==> [12, 34, 56, 76, 4, 3, 2, 4, 5, 5, 1, 1, 89]
+
+jshell> numbers.stream().distinct().forEach(Sytem.out::println)
+|  Error:
+|  package Sytem does not exist
+|  numbers.stream().distinct().forEach(Sytem.out::println)
+|                                      ^-------^
+
+
+jshell> numbers.stream().distinct().forEach(System.out::println)
+12
+34
+56
+76
+4
+3
+2
+5
+1
+89
+
+
+
+jshell> numbers.stream().distinct().sorted().forEach(Sytem.out::println)
+|  Error:
+|  package Sytem does not exist
+|  numbers.stream().distinct().sorted().forEach(Sytem.out::println)
+|                                               ^-------^
+
+jshell> numbers.stream().distinct().sorted().forEach(System.out::println)
+1
+2
+3
+4
+5
+12
+34
+jshell> List<String> name =List.of("ajay", "sonu" ,"sonu",  "sharma" ,"raj", "shivam" , "vicky", "Pankaj")
+name ==> [ajay, sonu, sonu, sharma, raj, shivam, vicky, Pankaj]
+
+jshell> name.stream().distinct().sorted().forEach(System.out::println)
+Pankaj
+ajay
+raj
+sharma
+shivam
+sonu
+vicky

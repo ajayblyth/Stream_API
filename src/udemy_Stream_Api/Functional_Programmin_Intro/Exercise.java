@@ -24,6 +24,6 @@ public class Exercise {
 //      course.stream().filter(x -> x.contains("spring")).forEach(System.out::println);
 
 //        course.stream().filter(x -> x.length()>=4).forEach(System.out::println);
-        course.stream().map(x ->x + "-> " + x.length() + "characters").forEach(System.out::println);
+        course.stream().map(x ->x + " " + x.length() + " characters").forEach(System.out::println);
     }
 }
