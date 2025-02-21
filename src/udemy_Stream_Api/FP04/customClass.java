@@ -128,7 +128,27 @@ public class customClass {
         System.out.println(courses.stream().filter(x-> x.getReviewScore()>90).findFirst());
         System.out.println(courses.stream().filter(x-> x.getReviewScore()>95).findAny());
 
+        System.out.println(courses.stream()
+                .filter(getReviewScoreGreateThan90())
+                .mapToInt(Course::getNoOfStudents)
+                .sum());
 
+
+        System.out.println(courses.stream()
+                .filter(getReviewScoreGreateThan90())
+                .mapToInt(Course::getNoOfStudents)
+                .average());
+
+
+        System.out.println(courses.stream()
+                .filter(getReviewScoreGreateThan90())
+                .count());
+
+
+        System.out.println(courses.stream()
+                .filter(getReviewScoreGreateThan90())
+                .mapToInt(Course::getNoOfStudents)
+                .max());
     }
 
 
