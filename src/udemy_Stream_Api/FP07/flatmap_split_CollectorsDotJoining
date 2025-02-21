@@ -1,0 +1,35 @@
+--collect(Collectors.joining(" "))
+
+--split() //returns array of elements
+syntax:
+map(x -> x.split(""))
+Splits each string into an array of characters.
+Example: "Java" → ["J", "a", "v", "a"]
+So, Stream<String> becomes Stream<String[]> (stream of arrays).
+
+==flatMap
+
+example:flatMap(Arrays::stream)  Converts each array into a separate stream and flattens them into one stream.
+        Instead of a stream of arrays, we get a stream of individual characters.
+It's useful when:
+You have a list of lists and want a single list.
+You have arrays inside a stream and need one continuous stream.
+
+Method	Result
+map()	- Returns a stream of objects (which may be nested).
+flatMap() - Flattens nested structures into a single stream.
+
+jshell> List<String> courses = List.of("Spring", "Spring Boot", "API", "microservices","AWS", "PCF", "AZURE", "Docker", "kubernates")                                                                                                           courses ==> [Spring, Spring Boot, API, microservices, AWS, PCF, AZURE, Docker, kubernates]
+
+jshell> courses.stream().collect(Collectors.joining(" "))
+$15 ==> "Spring Spring Boot API microservices AWS PCF AZURE Docker kubernates"
+
+jshell> courses.stream().collect(Collectors.joining(","))
+$16 ==> "Spring,Spring Boot,API,microservices,AWS,PCF,AZURE,Docker,kubernates"
+
+courses.stream()
+    .map(x -> x.split(""))  // Step 1: Convert each string into an array of characters
+    .flatMap(Arrays::stream) // Step 2: Flatten multiple arrays into a single stream
+    .collect(Collectors.toList()); // Step 3: Collect results into a List
+
+$17 ==> [S, p, r, i, n, g, S, p, r, i, n, g,  , B, o, o, t, A, P, I, m, i, c, r, o, s, e, r, v, i, c, e, s, A, W, S, P, C, F, A, Z, U, R, E, D, o, c, k, e, r, k, u, b, e, r, n, a, t, e, s]
