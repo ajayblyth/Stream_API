@@ -33,3 +33,21 @@ courses.stream()
     .collect(Collectors.toList()); // Step 3: Collect results into a List
 
 $17 ==> [S, p, r, i, n, g, S, p, r, i, n, g,  , B, o, o, t, A, P, I, m, i, c, r, o, s, e, r, v, i, c, e, s, A, W, S, P, C, F, A, Z, U, R, E, D, o, c, k, e, r, k, u, b, e, r, n, a, t, e, s]
+
+
+flatmap example 2
+
+List<String> courses = List.of("Java", "Spring");
+List<String> courses2 = List.of("AWS", "Docker");
+
+List<List<String>> coursePairs = courses.stream()
+    // Step 1: Convert 'courses' list into a stream
+    .flatMap(course ->
+        courses2.stream()
+            // Step 2: For each 'course' from 'courses', iterate over 'courses2'
+            .map(course2 -> List.of(course, course2)) // Step 3: Pair 'course' with each 'course2'
+    )
+    // Step 4: flatMap() flattens the nested Stream<List<String>> into a single Stream<List<String>>
+    .collect(Collectors.toList()); // Step 5: Collects the result into a List<List<String>>
+
+System.out.println(coursePairs);
