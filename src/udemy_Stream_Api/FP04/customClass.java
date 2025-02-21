@@ -1,6 +1,7 @@
 package udemy_Stream_Api.FP04;
 
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -63,6 +64,8 @@ public class customClass {
 
 
     public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8);
+
         List<Course> courses = List.of(
                 new Course("Spring", "Framework", 98, 20000),
                 new Course("Spring Boot", "Framework", 95, 18000),
@@ -86,7 +89,8 @@ public class customClass {
 
         Comparator<Course> comparingWithNumberOfStudents = Comparator.comparingInt(Course::getNoOfStudents); // using comparingInt as NoOfStudents is of primitive type
 
-        Comparator<Course> comparingWithNumberOfStudentsIncreasing = Comparator.comparing(Course::getNoOfStudents).reversed();
+        Comparator<Course> comparingWithNumberOfStudentsIncreasing = Comparator.comparing(Course::getNoOfStudents)
+                                                                    .reversed();
 
         Comparator<Course> comparingWithNumberOfstudentsAndNoOfReviews = Comparator
                 .comparing(Course::getNoOfStudents)
@@ -100,9 +104,18 @@ public class customClass {
 //
 //        System.out.println(courses.stream().sorted(comparingWithNumberOfStudentsIncreasing).collect(Collectors.toList()));
 
-        System.out.println(courses.stream().sorted(comparingWithNumberOfstudentsAndNoOfReviews).collect(Collectors.toList()));
+//        System.out.println(courses.stream().sorted(comparingWithNumberOfstudentsAndNoOfReviews).collect(Collectors.toList()));
+//
+//        numbers.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+        System.out.println( numbers.stream().sorted().skip(2).collect(Collectors.toList()));
 
+        System.out.println( numbers.stream().sorted().skip(2).limit(3).collect(Collectors.toList()));
+//
+        System.out.println(numbers.stream().
+                takeWhile(x-> x<3).collect(Collectors.toList()));
 
+        System.out.println(numbers.stream()
+                .dropWhile(x-> x<4).collect(Collectors.toList()));
     }
 
 
