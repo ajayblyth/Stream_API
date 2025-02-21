@@ -1,0 +1,134 @@
+**Java Threads and Multithreading**
+
+## 1. **Extending `Thread` Class**
+This method involves creating a subclass of `Thread` and overriding the `run()` method.
+
+### Example:
+
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread is running using Thread class.");
+    }
+
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+        thread.start(); // Start the thread
+    }
+}
+```
+✅ **Pros:** Simple to implement.
+❌ **Cons:** Since Java does not support multiple inheritance, extending `Thread` prevents extending another class.
+
+---
+
+## 2. **Implementing `Runnable` Interface**
+This is a better approach as it allows you to extend another class if needed.
+
+### Example:
+
+class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Thread is running using Runnable interface.");
+    }
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(new MyRunnable()); // Pass Runnable object to Thread
+        thread.start();
+    }
+}
+```
+✅ **Pros:** More flexible, allows multiple inheritance.
+✅ **Best Practice:** Prefer this over extending `Thread`.
+
+---
+
+## 3. **Using Lambda Expressions (Java 8+)**
+If your `run()` method is simple, you can use a lambda function.
+
+### Example:
+
+public class LambdaThread {
+    public static void main(String[] args) {
+        Thread thread = new Thread(() -> System.out.println("Thread is running using Lambda."));
+        thread.start();
+    }
+}
+```
+✅ **Pros:** Concise, avoids boilerplate code.
+
+---
+
+## 4. **Using `ExecutorService` (Best for Thread Pooling)**
+For better thread management, use `ExecutorService`.
+
+### Example:
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ThreadPoolExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3); // Create a pool of 3 threads
+
+        for (int i = 0; i < 5; i++) {
+            executor.execute(() -> System.out.println("Thread is running: " + Thread.currentThread().getName()));
+        }
+
+        executor.shutdown(); // Shutdown the executor
+    }
+}
+```
+✅ **Pros:** Efficient for multi-threading, manages threads dynamically.
+
+---
+
+## 5. **Using `Callable` and `Future` (For Returning Values)**
+Unlike `Runnable`, `Callable` can return values and throw exceptions.
+
+### Example:
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class CallableExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Callable<Integer> task = () -> {
+            System.out.println("Callable thread running...");
+            return 42; // Returning a value
+        };
+
+        Future<Integer> future = executor.submit(task);
+        System.out.println("Result from thread: " + future.get()); // Blocks until the result is available
+
+        executor.shutdown();
+    }
+}
+```
+✅ **Pros:** Allows threads to return values.
+✅ **Best for:** Asynchronous computations.
+
+---
+
+## **Which Method to Use?**
+
+| **Method**         | **Use Case** |
+|--------------------|-------------|
+| `Thread` Class    | Simple, but not recommended. |
+| `Runnable`        | Preferred for flexibility. |
+| `Lambda`          | Best for short tasks. |
+| `ExecutorService` | For handling multiple threads efficiently. |
+| `Callable`        | When you need to return values from threads. |
+
+---
+
+### **Summary:**
+- **Use `Runnable`** when you need flexibility.
+- **Use `ExecutorService`** when managing multiple threads.
+- **Use `Callable`** when the thread needs to return a value.
+- **Avoid extending `Thread`** unless necessary.
+- **Use Lambda expressions** for concise thread creation.
+
