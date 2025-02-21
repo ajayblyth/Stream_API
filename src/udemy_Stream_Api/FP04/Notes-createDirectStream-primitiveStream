@@ -1,0 +1,49 @@
+Note: streams created by List.of or Stream.of uses reference pipeline, means they are less efficient due to frequent
+boxing/unboxing.
+-> primitive stream created like
+int[] arrayNumber = {1,2,3,4,5,6}
+Arrays.stream(arrayNumber) are better in performance as they dont need boxing/autoboxing
+
+
+
+
+
+jshell> List<Integer> numbers = List.of(1,2,3,4,5,6,7,7)
+numbers ==> [1, 2, 3, 4, 5, 6, 7, 7]
+
+jshell> numbers.stream()
+$2 ==> java.util.stream.ReferencePipeline$Head@5b37e0d2
+
+jshell> stream.of(11,22,33,44,55,66)
+|  Error:
+|  cannot find symbol
+|    symbol:   variable stream
+|  stream.of(11,22,33,44,55,66)
+|  ^----^
+
+jshell> Stream.of(11,22,33,44,55,66)
+$3 ==> java.util.stream.ReferencePipeline$Head@5a2e4553
+
+jshell> Stream.of(11,22,33,44,55,66).count()
+$4 ==> 6
+
+jshell> Stream.of(11,22,33,44,55,66).reduce(0,Integer::sum)
+$5 ==> 231
+
+jshell> int[] numberArray = {12,23,34,45,56,67}
+numberArray ==> int[6] { 12, 23, 34, 45, 56, 67 }
+
+jshell> Arrays.stream(numberArray)
+$7 ==> java.util.stream.IntPipeline$Head@77a567e1
+
+jshell> Arrays.stream(numberArray).sum()
+$8 ==> 237
+
+jshell> Arrays.stream(numberArray).average()
+$9 ==> OptionalDouble[39.5]
+
+jshell> Arrays.stream(numberArray).min()
+$10 ==> OptionalInt[12]
+
+jshell> Arrays.stream(numberArray).max()
+$11 ==> OptionalInt[67]
