@@ -116,6 +116,19 @@ public class customClass {
 
         System.out.println(numbers.stream()
                 .dropWhile(x-> x<4).collect(Collectors.toList()));
+
+        System.out.println(courses.stream().max(comparingWithNumberOfstudentsAndNoOfReviews));
+        System.out.println(courses.stream().min(comparingWithNumberOfstudentsAndNoOfReviews));
+        System.out.println(courses.stream()
+                .filter(getReviewScoreLessThan90())
+                .min(comparingWithNumberOfstudentsAndNoOfReviews)
+                .orElse(new Course("java", "coding", 96, 22000)));
+
+
+        System.out.println(courses.stream().filter(x-> x.getReviewScore()>90).findFirst());
+        System.out.println(courses.stream().filter(x-> x.getReviewScore()>95).findAny());
+
+
     }
 
 
