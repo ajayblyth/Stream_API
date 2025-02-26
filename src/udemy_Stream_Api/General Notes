@@ -5,7 +5,6 @@ Intermeditae operations:
  Terminal operations:
  they return something other than a stream , even just void.
  Example: forEach return void.
- .collect returns a list.
  .reduce returns an integer.
 
 
