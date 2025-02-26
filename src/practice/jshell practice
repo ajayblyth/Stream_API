@@ -1,0 +1,149 @@
+
+
+jshell> List<Integer> numbers = List.of(1,2,3);
+numbers ==> [1, 2, 3]
+
+jshell> numbers.stream().reduce(Integer::sum);
+$2 ==> Optional[6]
+
+jshell> numbers.stream().reduce(0, (x,y)->x+y)
+$3 ==> 6
+
+jshell> numbers.stream().reduce(0,(x,y)-> x>y?x:y)
+$4 ==> 3
+
+jshell> numbers.stream().reduce(Integer.MAX_VALUE,(x,y)-> x>y?y:x)
+$5 ==> 1
+
+jshell> numbers.stream().map(x-> x*x).reduce(0,Integer::sum)
+$6 ==> 14
+
+jshell> jshell> numbers.stream().map(x-> x*x*x).reduce(0,Integer::sum)
+|  Error:
+|  cannot find symbol
+|    symbol:   variable jshell
+|  jshell> numbers.stream().map(x-> x*x*x).reduce(0,Integer::sum)
+|  ^----^
+
+jshell> numbers.stream().map(x-> x*x*x).reduce(0,Integer::sum)
+$7 ==> 36
+
+jshell> List<Integer>list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9))
+list ==> [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+jshell> list.stream().filter(x -> x%2 != 0).reduce(0,Integer::sum)
+$9 ==> 25
+
+jshell> List<Integer>number = new ArrayList<>(Arrays.asList(1,1,2,2,3,3,4,5,6,7,6,5,8,9,8,6,8))
+number ==> [1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 6, 5, 8, 9, 8, 6, 8]
+
+jshell> number.stream().distinct().forEach(System.out::println)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+jshell> jshell> List<Integer>list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9))
+|  Error:
+|  cannot find symbol
+|    symbol:   variable jshell
+|  jshell> List<Integer>list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9))
+|  ^----^
+|  Error:
+|  cannot find symbol
+|    symbol:   variable List
+|  jshell> List<Integer>list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9))
+|          ^--^
+|  Error:
+|  cannot find symbol
+|    symbol:   variable Integer
+|  jshell> List<Integer>list = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9))
+|               ^-----^
+
+jshell>
+
+jshell>
+
+jshell> jshell> number.stream().sorted().forEach(System.out::println)
+|  Error:
+|  cannot find symbol
+|    symbol:   variable jshell
+|  jshell> number.stream().sorted().forEach(System.out::println)
+|  ^----^
+|  Error:
+|  'void' type not allowed here
+|  jshell> number.stream().sorted().forEach(System.out::println)
+|          ^---------------------------------------------------^
+
+jshell> number.stream().sorted().forEach(System.out::println)
+1
+1
+2
+2
+3
+3
+4
+5
+5
+6
+6
+6
+7
+8
+8
+8
+9
+
+jshell> number.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println)
+9
+8
+8
+8
+7
+6
+6
+6
+5
+5
+4
+3
+3
+2
+2
+1
+1
+
+jshell> jshell> locations.stream().sorted(Comparator.comparing(x-> x.length())).forEach(System.out::println)
+|  Error:
+|  cannot find symbol
+|    symbol:   variable jshell
+|  jshell> locations.stream().sorted(Comparator.comparing(x-> x.length())).forEach(System.out::println)
+|  ^----^
+|  Error:
+|  cannot find symbol
+|    symbol:   variable locations
+|  jshell> locations.stream().sorted(Comparator.comparing(x-> x.length())).forEach(System.out::println)
+|          ^-------^
+|  Error:
+|  cannot find symbol
+|    symbol:   method length()
+|  jshell> locations.stream().sorted(Comparator.comparing(x-> x.length())).forEach(System.out::println)
+|                                                             ^------^
+
+jshell> List<String> locations =List.of("jammu", "kashmir", "ladakh", "kathua", "delhi", "jammu")
+locations ==> [jammu, kashmir, ladakh, kathua, delhi, jammu]
+
+jshell> locations.stream().sorted(Comparator.comparing(x-> x.length())).forEach(System.out::println)
+jammu
+delhi
+jammu
+ladakh
+kathua
+kashmir
+
+jshell> list.stream().map(x->x*x).collect(Collectors.toList())

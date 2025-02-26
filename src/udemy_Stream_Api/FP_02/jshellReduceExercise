@@ -1,3 +1,7 @@
+NOte: JSHELL came in java 9 update
+2, it can print the code directly, System.out.println("Hello World")
+
+
 
 jshell> list.of(12,34,56,78,90)
 List<Integer> numbers = list.of(12,34,56,76,54,32)
