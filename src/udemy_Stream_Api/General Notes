@@ -2,12 +2,108 @@ Intermeditae operations:
  The operations that are performed on a string and they return a string are called intermediate operations.
  e.g dinstinct(), sort(), map(), filter() etc.
 
- Terminal operations: they return something other than a stream , even just void.
+ Terminal operations:
+ they return something other than a stream , even just void.
  Example: forEach return void.
  .collect returns a list.
  .reduce returns an integer.
 
+
+
+ ----------------------------------------------------------------------------------------------
+
+
+ 1️⃣ Static Method Reference (ClassName::staticMethod)
+ 👉 Used when referencing a static method of a class.
+ 👉 No need to create an object of the class.
+
+ ✅ Example:
+
+ class Utility {
+     public static String toUpperCase(String str) {
+         return str.toUpperCase();
+     }
+ }
+
+ public class StaticMethodReference {
+     public static void main(String[] args) {
+         List<String> words = List.of("java", "spring", "hibernate");
+
+         // Using static method reference
+         List<String> upperCaseWords = words.stream()
+                                            .map(Utility::toUpperCase) // Static method reference
+                                            .collect(Collectors.toList());
+
+         System.out.println(upperCaseWords);
+     }
+ }
+
+
+ Utility::toUpperCase is a reference to a static method.
+ It does not require an object of Utility.
+ Syntax: ClassName::staticMethod.
+ 2️⃣ Non-Static (Instance) Method Reference (object::instanceMethod)
+ 👉 Used when referencing an instance (non-static) method of a particular object.
+ 👉 Requires an object to call the method.
+
+ ✅ Example:
+
+
+ class Printer {
+     public String printWithExclamation(String str) {
+         return str + "!";
+     }
+ }
+
+ public class InstanceMethodReference {
+     public static void main(String[] args) {
+         List<String> words = List.of("Hello", "World", "Java");
+
+         Printer printer = new Printer(); // Creating an object
+
+         // Using instance method reference
+         words.forEach(printer::printWithExclamation); // Non-static method reference
+     }
+ }
+ 🔹 Key Points:
+ printer::printWithExclamation is a reference to an instance method.
+ Requires an object (printer) to call the method.
+ Syntax: object::instanceMethod.
+ 3️⃣ Non-Static Method Reference on a Class (ClassName::instanceMethod)
+ 👉 Used when referencing an instance method but without a specific object.
+ 👉 The method will be called on each element of the stream.
+
+ ✅ Example:
+
+ public class InstanceMethodRefOnClass {
+     public static void main(String[] args) {
+         List<String> words = List.of("hello", "world");
+
+         // Using instance method reference on a class
+         List<String> upperCaseWords = words.stream()
+                                            .map(String::toUpperCase) // Calling toUpperCase() on each string
+                                            .collect(Collectors.toList());
+
+         System.out.println(upperCaseWords);
+     }
+ }
+ 🖥 Output:
+
+ [HELLO, WORLD]
+ 🔹 Key Points:
+ String::toUpperCase is a reference to an instance method.
+ No specific object is provided; Java applies it to each element in the stream.
+ Syntax: ClassName::instanceMethod.
+
+
+ 🚀 When to Use Which?
+ ✔ Use static method reference when calling a utility/helper method (e.g., Math::max).
+ ✔ Use instance method reference when working with an already created object.
+ ✔ Use class instance method reference when calling methods on stream elements (String::toUpperCase).
+
+
  ---------------------------------------------------------------------------------------
+
 Both statements create a list, but they have key differences in mutability and flexibility.
 
 1️⃣ Using new ArrayList<>(Arrays.asList(1,2,3,4))
