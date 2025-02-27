@@ -1,0 +1,35 @@
+1️ .Predicate<T> (Used for Conditional Checks)
+Represents a boolean-valued function (i.e., returns true or false).
+Has one input parameter and returns a boolean.
+Commonly used in filtering operations.
+
+2 Function<T, R> (Used for Transformation)
+Takes one input (T) and returns one output (R).
+Used for converting one type to another.
+
+3 Consumer<T> (Used for Performing an Action)
+Takes one input (T) but does not return anything (void return type).
+Used for performing side effects like printing or modifying objects.
+
+example of three:
+
+public class FunctionalInterfaceExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(5, 12, 7, 20, 15);
+
+        // Predicate
+        Predicate<Integer> isEven = num -> num % 2 == 0;
+
+        // Function
+        Function<Integer, Integer> square = num -> num * num;
+
+        // Consumer
+        Consumer<Integer> printNumber = num -> System.out.println("Processed Number: " + num);
+
+        // Applying all three in a single stream operation
+        numbers.stream()
+                .filter(isEven)               // Use Predicate
+                .map(square)                  // Use Function
+                .forEach(printNumber);        // Use Consumer
+    }
+}

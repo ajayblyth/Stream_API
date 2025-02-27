@@ -1,4 +1,4 @@
-package practice;
+package practice.one;
 
 import java.util.List;
 

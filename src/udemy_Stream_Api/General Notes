@@ -1,5 +1,5 @@
 Intermeditae operations:
- The operations that are performed on a string and they return a string are called intermediate operations.
+ The operations that are performed on a stream and they return a stream are called intermediate operations.
  e.g dinstinct(), sort(), map(), filter() etc.
 
  Terminal operations:
