@@ -72,3 +72,15 @@ printNumber.andThen(squareNumber).accept(4);
 // Output:
 // Number: 4
 // Square: 16
+
+/*
+Tips use primitive date type when using lambda on primitives, its saves the time of boxing/unboxing
+e.g IntBinaryOperator intBinaryOperator = (x,y) -> x+y; it deals with primitive instead of wrapper INTEGER
+other examples are:
+IntConsumer
+IntFunction
+IntPredicate
+IntSupplier
+IntToDoubleFunction
+IntUnaryOperator
+ */

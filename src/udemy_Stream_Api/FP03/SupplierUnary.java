@@ -13,6 +13,7 @@ public class SupplierUnary {
         };
         System.out.println(suplier.get());
 
+//unary operator is specialization of function<T,T> , it takes one argument and gives output of same type
 
         UnaryOperator<Integer> unaryOperator = (x)-> x*5;
 

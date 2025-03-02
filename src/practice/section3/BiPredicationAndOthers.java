@@ -1,35 +1,35 @@
-package udemy_Stream_Api.FP03;
+package practice.section3;
+
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-public class BiConsumer_predicate_function {
+public class BiPredicationAndOthers {
     public static void main(String[] args) {
 
         //bipredicate test() two values and returns boolean only
+        BiPredicate<Integer,String> value = (x,y)->x>10 && y.length()<7;
 
-        BiPredicate < Integer ,String> biPredicate = (x, y)->{
-
-        return x>10 && y.length()>3;
-        } ;
-        System.out.println(biPredicate.test(13, "abcdes"));
+        System.out.println(value.test(12,"ajay"));
 
         //bifunction , apply() two values and return one
-
-        BiFunction< Integer ,String,String > biFunction = (x, y)->{
-
-            return x + " " + y;
+        BiFunction<Integer,String,String>value1 = (x,y)-> {
+            return x + " " +y;
         };
-            System.out.println(biFunction.apply(10,"ajay"));
+        System.out.println(value1.apply(11, "  sharma"));
+
 
         //accept() two values returns same
-        BiConsumer< Integer, String> biConsumer = (x,y)->{
+        BiConsumer<Integer, String> value2 =(x,y)->{
             System.out.println(x);
             System.out.println(y);
         };
-       biConsumer.accept(10,"abc");
-    }}
+        value2.accept(56,"biconsumer");
+    }
+
+}
 /*
 Tips use primitive date type when using lambda on primitives, its saves the time of boxing/unboxing
 e.g IntBinaryOperator intBinaryOperator = (x,y) -> x+y; it deals with primitive instead of wrapper INTEGER
