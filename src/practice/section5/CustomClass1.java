@@ -59,28 +59,28 @@ public class CustomClass1 {
 
         Comparator<Course> compareByStudents = Comparator.comparingInt(Course::getNoOfStudents);
         Comparator<Course> compareByStudentsReversed = compareByStudents.reversed();
-        Comparator<Course> compareByStudentsThenReviews =
-                Comparator.comparingInt(Course::getNoOfStudents)
+
+        Comparator<Course> compareByStudentsThenReviews = Comparator.comparingInt(Course::getNoOfStudents)
                         .thenComparingInt(Course::getReviewScore);
-//
-//        System.out.println("Sorted by Students: " + courses.stream().sorted(compareByStudents).collect(Collectors.toList()));
-//        System.out.println("Sorted by Students Descending: " + courses.stream().sorted(compareByStudentsReversed).collect(Collectors.toList()));
-//        System.out.println("Sorted by Students & Reviews: " + courses.stream().sorted(compareByStudentsThenReviews).collect(Collectors.toList()));
-//
-//        System.out.println(numbers.stream().sorted().skip(2).collect(Collectors.toList()));
-//        System.out.println(numbers.stream().sorted().skip(2).limit(3).collect(Collectors.toList()));
-//        System.out.println(numbers.stream().takeWhile(x -> x < 3).collect(Collectors.toList()));
-//        System.out.println(numbers.stream().dropWhile(x -> x < 4).collect(Collectors.toList()));
-//
-//        // Max, Min, and Filtering with `orElse`
-//        System.out.println(courses.stream().max(compareByStudentsThenReviews));
-//        System.out.println(courses.stream().min(compareByStudentsThenReviews));
-//        System.out.println(courses.stream()
-//                .filter(getReviewScoreLessThan90())
-//                .min(compareByStudentsThenReviews)
-//                .orElse(new Course("C++ Fundamentals", "Programming", 89, 12000)));
-//
-//        // Finding Elements
+
+        System.out.println("Sorted by Students: " + courses.stream().sorted(compareByStudents).collect(Collectors.toList()));
+        System.out.println("Sorted by Students Descending: " + courses.stream().sorted(compareByStudentsReversed).collect(Collectors.toList()));
+        System.out.println("Sorted by Students & Reviews: " + courses.stream().sorted(compareByStudentsThenReviews).collect(Collectors.toList()));
+
+        System.out.println(numbers.stream().sorted().skip(2).collect(Collectors.toList()));
+        System.out.println(numbers.stream().sorted().skip(2).limit(3).collect(Collectors.toList()));
+        System.out.println(numbers.stream().takeWhile(x -> x < 3).collect(Collectors.toList()));
+        System.out.println(numbers.stream().dropWhile(x -> x < 4).collect(Collectors.toList()));
+
+        // Max, Min, and Filtering with `orElse`
+        System.out.println(courses.stream().max(compareByStudentsThenReviews));
+        System.out.println(courses.stream().min(compareByStudentsThenReviews));
+        System.out.println(courses.stream()
+                .filter(getReviewScoreLessThan90())
+                .min(compareByStudentsThenReviews)
+                .orElse(new Course("C++ Fundamentals", "Programming", 89, 12000)));
+
+        // Finding Elements
         System.out.println(courses.stream().filter(x -> x.getReviewScore() > 90).findFirst());
         System.out.println(courses.stream().filter(x -> x.getReviewScore() > 95).findAny());
 
@@ -99,20 +99,20 @@ public class CustomClass1 {
         System.out.println("Max Students in >90 Review Courses: " +
                 courses.stream().filter(getReviewScoreGreaterThan90()).mapToInt(Course::getNoOfStudents).max());
 
-//        // Grouping
-//        System.out.println("Courses Grouped by Category: " +
-//                courses.stream().collect(Collectors.groupingBy(Course::getCategory)));
-//
-//        System.out.println("Count of Courses per Category: " +
-//                courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.counting())));
-//
-//        System.out.println("Max Review Score per Category: " +
-//                courses.stream().collect(Collectors.groupingBy(Course::getCategory,
-//                        Collectors.maxBy(Comparator.comparingInt(Course::getReviewScore)))));
-//
-//        System.out.println("Courses Names Grouped by Category: " +
-//                courses.stream().collect(Collectors.groupingBy(Course::getCategory,
-//                        Collectors.mapping(Course::getName, Collectors.toList()))));
+        // Grouping
+        System.out.println("Courses Grouped by Category: " +
+                courses.stream().collect(Collectors.groupingBy(Course::getCategory)));
+
+        System.out.println("Count of Courses per Category: " +
+                courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.counting())));
+
+        System.out.println("Max Review Score per Category: " +
+                courses.stream().collect(Collectors.groupingBy(Course::getCategory,
+                        Collectors.maxBy(Comparator.comparingInt(Course::getReviewScore)))));
+
+        System.out.println("Courses Names Grouped by Category: " +
+                courses.stream().collect(Collectors.groupingBy(Course::getCategory,
+                        Collectors.mapping(Course::getName, Collectors.toList()))));
     }
 
         //allmatch, nonematch, anymatch, predicate for filtering
