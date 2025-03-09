@@ -8,6 +8,15 @@ Intermeditae operations:
  .reduce returns an integer.
 
 
+-----------------------------------------------------------------------------------
+
+Why is Functional Programming Considered Lazy?
+Functional programming (FP) is lazy because it delays computation until it is actually needed. This concept is known as lazy evaluation.
+Instead of executing every function immediately, FP constructs a promise to execute it later when required.
+
+
+example: ✔ The filter() function does not execute immediately. It only runs when forEach() (a terminal operation) is called.
+because of this performance is better as we are performing operations only when needed
 
  ----------------------------------------------------------------------------------------------
 
@@ -147,9 +156,7 @@ Example to Show the Difference
 }
 
 --------------------------------------------🔍 Breakdown of Your Code
-                                            java
-                                            Copy
-                                            Edit
+
                                             List<String> locationsLength = locations.stream()
                                                     .map(x -> x + " " + x.length()) // `x.length()` is an int
                                                     .collect(Collectors.toList());
