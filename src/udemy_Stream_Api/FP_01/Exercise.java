@@ -1,6 +1,7 @@
 package udemy_Stream_Api.FP_01;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Exercise {
@@ -21,9 +22,22 @@ public class Exercise {
     private static void courses(){
         List <String > course = Arrays.asList("spring","spring boot", "api", "kubernate", "micro service ", "abc");
 
-//      course.stream().filter(x -> x.contains("spring")).forEach(System.out::println);
+        /*
+        practice
 
-//        course.stream().filter(x -> x.length()>=4).forEach(System.out::println);
+        List<String> lList = new LinkedList<>(Arrays.asList("ajay", "sharma"));
+List<String> name = Arrays.asList("ajay", "sharma");
+List<String> random = List.of("snds","buhe", "dndj");
+
+         */
+
+        System.out.println("contanins spring = ");
+      course.stream().filter(x -> x.contains("spring")).forEach(System.out::println);
+
+        System.out.println("length greater than 4");
+        course.stream().filter(x -> x.length()>=4).forEach(System.out::println);
+
+        System.out.println("character and their length");
         course.stream().map(x ->x + " " + x.length() + " characters").forEach(System.out::println);
     }
 }
