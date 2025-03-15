@@ -1,0 +1,257 @@
+🔹 Basic Stream API Questions
+1. What is Java Stream API, and why is it used?
+
+Introduced in Java 8 and can process collections of data in a functional style.
+It helps with complex operations on data, such as filtering, mapping, and reducing, in a more concise and readable way.
+
+Purpose of Stream API:
+
+Provides functional programming capabilities in Java.
+Supports lazy evaluation, which improves performance.
+Enables parallel processing with parallelStream().
+Helps in writing clean and less error-prone code.
+How it Helps with Functional Programming:
+The Stream API brings functional programming concepts like map, filter, reduce, and forEach into Java. It encourages declarative programming rather than imperative programming, where we explicitly write loops.
+
+Example:
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+// Using Stream API to filter names starting with 'A' and print them
+names.stream()
+     .filter(name -> name.startsWith("A"))
+     .forEach(System.out::println);
+
+2. What is Functional Programming?
+Functional programming is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data. It is based on immutable data, pure functions, and higher-order functions.
+
+Key Features of Functional Programming in Java:
+Pure Functions → Functions that do not modify state and return the same output for the same input.
+Immutability → Avoids changing existing data, focusing on creating new copies.
+Higher-Order Functions → Functions that accept other functions as arguments or return them.
+Declarative Style → Focuses on what to do rather than how to do it.
+Avoiding Side Effects → Functions should not change external variables or state.
+Example of Functional Programming in Java:
+java
+Copy
+Edit
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+// Using functional programming with Streams
+List<Integer> doubledNumbers = numbers.stream()
+                                      .map(n -> n * 2)  // Pure function
+                                      .collect(Collectors.toList());
+
+System.out.println(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+🔹 No loops, no modifications to original data, and clean declarative style!
+
+3. Difference between Collection and Stream in Java?
+Feature	Collection	Stream
+Definition	Stores and manages elements	Processes elements in a functional manner
+Modification	Supports adding/removing elements	Does not modify the original data
+Reusability	Can be iterated multiple times	Can only be consumed once
+Evaluation	Eager (all elements available immediately)	Lazy (processed only when required)
+Parallel Processing	Not built-in	Supports parallel execution with parallelStream()
+Type of Operations	Mutable operations (add, remove)	Immutable operations (map, filter, reduce)
+Example:
+java
+Copy
+Edit
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+// Collection stores elements
+numbers.add(6);  // Allowed
+
+// Stream processes data, but original list remains unchanged
+Stream<Integer> stream = numbers.stream().map(n -> n * 2);
+🔹 Key takeaway: Collections are data containers, while Streams are data processors.
+
+
+2. Difference between Collection and Stream in Java?
+Discuss how Collection stores elements while Stream processes them in a functional manner.
+3. How to create a Stream in Java?
+Using stream() from collections
+Using Stream.of()
+Using Stream.iterate() and Stream.generate()
+4. Can you modify elements inside a Stream?
+Discuss immutability and the functional approach of Streams.
+5. Difference between map() and flatMap()?
+Explain how map() transforms elements while flatMap() flattens nested structures.
+6. How does filter() work in Streams?
+Provide an example of filtering elements based on a condition.
+7. What is the difference between forEach() and map()?
+Explain how forEach() is used for iteration while map() is for transformation.
+8. How to sort a List using Stream API?
+Show how sorted() works with natural and custom comparators.
+9. What are terminal and intermediate operations in Stream API?
+Explain the difference and give examples.
+10. Difference between findFirst() and findAny()?
+Discuss how findFirst() always returns the first element, while findAny() can return any element in parallel streams.
+🔹 Intermediate Stream API Questions
+11. How does reduce() work in Java Streams?
+Explain reduction operations with examples (sum, max, concatenation).
+12. How to count elements in a Stream?
+Using count() method.
+13. What is the difference between collect() and toArray()?
+Explain collect(Collectors.toList()) vs toArray().
+14. How to convert a Stream into a Map?
+Use Collectors.toMap() to transform a list into a key-value mapping.
+15. Explain groupingBy() and partitioningBy() in Collectors.
+groupingBy() → Groups elements based on a classifier function.
+partitioningBy() → Splits elements into true/false groups.
+16. Can you use Stream API with primitive types?
+Discuss IntStream, LongStream, and DoubleStream.
+17. What is lazy evaluation in Streams?
+Explain how intermediate operations are not executed until a terminal operation is applied.
+18. What is the performance impact of using Streams vs traditional loops?
+Compare performance and when to prefer one over the other.
+🔹 Advanced Stream API Questions
+19. What are Parallel Streams, and how do they work?
+Discuss parallelStream(), when to use it, and potential issues (e.g., shared mutable state).
+20. Can you explain short-circuiting operations in Streams?
+Operations like limit(), findFirst(), and anyMatch() that terminate early.
+
+------------------------------------------------------------------------------------
+💡 Bonus: Practical Questions
+How to remove duplicates using Stream API?
+How to find the second-highest number in a list?
+How to merge two lists using Streams?
+How to perform pagination using skip() and limit()?
+
+----------------------------------------------------------------------------------
+
+21. What is the difference between findFirst() and findAny() in Java Streams?
+findFirst() guarantees the first element; findAny() is optimized for parallel streams.
+22. How does skip() work in Stream API?
+Skips the first N elements in a Stream.
+23. How to find the maximum and minimum values in a list using Streams?
+Using max() and min() with a comparator.
+24. How to find the sum of all elements in a list using Stream API?
+Using reduce() or mapToInt().sum().
+25. How to count the occurrences of each word in a list using Stream API?
+Using Collectors.groupingBy() with Collectors.counting().
+26. How does the peek() method work in Stream API?
+Used for debugging or intermediate operations without modifying the Stream.
+27. What is the difference between toArray() and collect(Collectors.toList())?
+toArray() converts Stream to an array, while collect() gathers elements into a list.
+28. How does limit() work in Stream API?
+Restricts the Stream to a certain number of elements.
+29. What is the purpose of mapToInt(), mapToDouble(), and mapToLong()?
+Converts objects into primitive streams for better performance.
+30. How do you flatten a List of Lists using Stream API?
+Using flatMap().
+🔹 Advanced Stream API Questions
+31. What are the different ways to create an infinite Stream?
+Using Stream.iterate() and Stream.generate().
+32. How to use Collectors.joining() to join Strings in a list?
+Example of Collectors.joining(", ").
+33. How to remove null values from a list using Stream API?
+Using filter(Objects::nonNull).
+34. What are the benefits of using primitive Streams (IntStream, DoubleStream)?
+Discuss memory and performance benefits over wrapper types.
+35. How to handle exceptions inside Stream API?
+Using try-catch inside map() or using a wrapper method.
+36. What is the difference between unordered() and sorted()?
+unordered() removes encounter order; sorted() maintains sorting.
+37. Why should we avoid using parallel streams with shared mutable state?
+Explain thread-safety issues.
+38. How does collect(Collectors.partitioningBy()) work?
+Splits elements into two groups based on a condition.
+39. How to perform pagination using Stream API?
+Using skip(offset).limit(pageSize).
+40. How to merge two lists into a map using Stream API?
+Using Collectors.toMap().
+🔹 Expert-Level Stream API Questions
+41. How to sort a list of objects using Stream API?
+Using sorted() with a comparator.
+42. How to find the second-highest number in a list?
+Using sorted().skip(n-1).findFirst().
+43. How to reverse a Stream?
+Using sorted(Comparator.reverseOrder()) or collecting to a list and reversing it.
+44. How to convert a Map to a Stream and vice versa?
+Using .entrySet().stream() and Collectors.toMap().
+45. How to find the first non-repeating character in a String using Streams?
+Using Collectors.groupingBy() and filter().
+46. Can you use parallelStream() on an array?
+Yes, using Arrays.stream(array).parallel().
+47. What happens if a Stream operation is executed on a closed Stream?
+It throws IllegalStateException.
+48. How do you transform a list of objects into a map of objects?
+Using Collectors.toMap() with key and value extractors.
+49. How does reduce() differ from collect()?
+reduce() combines elements into a single value, collect() gathers them into a collection.
+50. When should you avoid using Java Streams?
+When performance is critical and traditional loops are more efficient.
+
+
+---------------------------------------------------------------------
+
+Some Extra Questions
+
+1. What are the key features of the Stream API?
+Explain functional operations, lazy evaluation, and parallel processing.
+2. What is the difference between stream() and parallelStream()?
+Discuss how parallelStream() enables multi-threading and when to use it.
+3. What is the difference between map() and filter()?
+Explain how map() transforms elements while filter() removes unwanted ones.
+4. Can we reuse a Java Stream after calling a terminal operation?
+Explain why Streams cannot be reused and how to create a new Stream.
+5. How do you convert a Stream to an ArrayList?
+Using collect(Collectors.toList()).
+6. How to convert a List of Strings to uppercase using Stream API?
+Example using map() and collect().
+7. How to find duplicate elements in a list using Stream API?
+Using Collectors.groupingBy() and filtering counts greater than 1.
+8. How do you check if all elements in a Stream match a condition?
+Using allMatch() method.
+9. How to get distinct elements from a Stream?
+Using distinct() method.
+10. How do you concatenate two Streams in Java?
+Using Stream.concat(stream1, stream2).
+🔹 Intermediate Stream API Questions
+11. What is the difference between findFirst() and findAny() in Java Streams?
+findFirst() guarantees first element; findAny() is optimized for parallel streams.
+12. How does skip() work in Stream API?
+Skips the first N elements in a Stream.
+13. How to find the maximum and minimum values in a list using Streams?
+Using max() and min() with a comparator.
+14. How to find the sum of all elements in a list using Stream API?
+Using reduce() or mapToInt().sum().
+15. How to count the occurrences of each word in a list using Stream API?
+Using Collectors.groupingBy() with Collectors.counting().
+16. How does the peek() method work in Stream API?
+Used for debugging or intermediate operations without modifying the Stream.
+17. What is the difference between toArray() and collect(Collectors.toList())?
+toArray() converts Stream to an array, while collect() gathers elements into a list.
+18. How does limit() work in Stream API?
+Restricts the Stream to a certain number of elements.
+19. What is the purpose of mapToInt(), mapToDouble(), and mapToLong()?
+Converts objects into primitive streams for better performance.
+20. How do you flatten a List of Lists using Stream API?
+Using flatMap().
+🔹 Advanced Stream API Questions
+21. What are the different ways to create an infinite Stream?
+Using Stream.iterate() and Stream.generate().
+22. How to use Collectors.joining() to join Strings in a list?
+Example of Collectors.joining(", ").
+23. How to remove null values from a list using Stream API?
+Using filter(Objects::nonNull).
+24. What are the benefits of using primitive Streams (IntStream, DoubleStream)?
+Discuss memory and performance benefits over wrapper types.
+25. How to handle exceptions inside Stream API?
+Using try-catch inside map() or using a wrapper method.
+26. What is the difference between unordered() and sorted()?
+unordered() removes encounter order; sorted() maintains sorting.
+27. Why should we avoid using parallel streams with shared mutable state?
+Explain thread-safety issues.
+28. How does collect(Collectors.partitioningBy()) work?
+Splits elements into two groups based on a condition.
+29. How to perform pagination using Stream API?
+Using skip(offset).limit(pageSize).
+30. How to merge two lists into a map using Stream API?
+Using Collectors.toMap().
+🚀 Bonus: Practical Coding Questions
+How to sort a list of objects using Stream API?
+How to find the second-highest number in a list?
+How to reverse a Stream?
+How to convert a Map to a Stream and vice versa?
+How to find the first non-repeating character in a String using Streams?
