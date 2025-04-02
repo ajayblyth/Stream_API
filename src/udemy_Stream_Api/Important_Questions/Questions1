@@ -10,6 +10,73 @@ Intermeditae operations:
  Example: forEach return void.
  .reduce returns an integer.
 
+ example of intermediate:
+
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+
+ public class StreamMethodsExample {
+     public static void main(String[] args) {
+         List<String> words = Arrays.asList("apple", "banana", "apple", "cherry", "blueberry", "avocado", "banana", "apricot");
+
+         // 1. filter() - Keep words that start with 'a'
+         List<String> filteredWords = words.stream()
+                 .filter(word -> word.startsWith("a"))
+                 .collect(Collectors.toList());
+         System.out.println("Filtered (start with 'a'): " + filteredWords); // [apple, apple, avocado, apricot]
+
+         // 2. map() - Convert all words to uppercase
+         List<String> mappedWords = words.stream()
+                 .map(String::toUpperCase)
+                 .collect(Collectors.toList());
+         System.out.println("Mapped (toUpperCase): " + mappedWords); // [APPLE, BANANA, APPLE, CHERRY, BLUEBERRY, AVOCADO, BANANA, APRICOT]
+
+         // 3. flatMap() - Flatten nested lists
+         List<List<String>> nestedList = Arrays.asList(
+                 Arrays.asList("apple", "banana"),
+                 Arrays.asList("cherry", "avocado")
+         );
+         List<String> flatMappedList = nestedList.stream()
+                 .flatMap(List::stream)
+                 .collect(Collectors.toList());
+         System.out.println("FlatMapped: " + flatMappedList); // [apple, banana, cherry, avocado]
+
+         // 4. distinct() - Remove duplicate words
+         List<String> distinctWords = words.stream()
+                 .distinct()
+                 .collect(Collectors.toList());
+         System.out.println("Distinct (Remove Duplicates): " + distinctWords); // [apple, banana, cherry, blueberry, avocado, apricot]
+
+         // 5. sorted() - Sort words in alphabetical order
+         List<String> sortedWords = words.stream()
+                 .sorted()
+                 .collect(Collectors.toList());
+         System.out.println("Sorted (Alphabetically): " + sortedWords); // [apple, apple, apricot, avocado, banana, banana, blueberry, cherry]
+
+         // 6. peek() - Debugging intermediate stream
+         List<String> peekedWords = words.stream()
+                 .peek(word -> System.out.println("Processing: " + word))
+                 .map(String::toUpperCase)
+                 .collect(Collectors.toList());
+         System.out.println("Peeked (Debugging Step): " + peekedWords); // Shows words being processed
+
+         // 7. limit() - Get first 3 words only
+         List<String> limitedWords = words.stream()
+                 .limit(3)
+                 .collect(Collectors.toList());
+         System.out.println("Limited (First 3 elements): " + limitedWords); // [apple, banana, apple]
+
+         // 8. skip() - Skip first 2 words
+         List<String> skippedWords = words.stream()
+                 .skip(2)
+                 .collect(Collectors.toList());
+         System.out.println("Skipped (First 2 elements): " + skippedWords); // [apple, cherry, blueberry, avocado, banana, apricot]
+     }
+ }
+
+
 
 -----------------------------------------------------------------------------------
 
@@ -559,24 +626,20 @@ b.) findAny() – Returns Any Element (Optimized for Parallel)
 
    -----------------------------------------------------------------------------------------------------------
  🔹 Intermediate Stream API Questions
+
 1. How does reduce() work in Java Streams?
 The reduce() method in Java Streams is a terminal operation used to reduce the stream elements into a single value. It performs a reduction operation such as summing numbers, finding the maximum, or concatenating strings.
 
 Syntax
-java
-Copy
-Edit
 T reduce(T identity, BinaryOperator<T> accumulator)
 identity – The initial value.
 
 accumulator – A function that combines two elements.
 
 Examples
+
 1️⃣ Sum of all numbers
 
-java
-Copy
-Edit
 import java.util.stream.Stream;
 
 public class ReduceExample {
@@ -586,11 +649,10 @@ public class ReduceExample {
         System.out.println(sum); // Output: 15
     }
 }
+
 2️⃣ Find the maximum value
 
-java
-Copy
-Edit
+
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -601,32 +663,30 @@ public class ReduceExample {
         System.out.println(max.get()); // Output: 8
     }
 }
+
 3️⃣ Concatenating strings
 
-java
-Copy
-Edit
+
 String result = Stream.of("Java", "Streams", "Reduce")
                       .reduce("", (a, b) -> a + " " + b);
 System.out.println(result.trim()); // Output: Java Streams Reduce
+
 2. How to count elements in a Stream?
 The count() method is a terminal operation that returns the number of elements in the stream.
 
 Example
-java
-Copy
-Edit
+
 long count = Stream.of("A", "B", "C", "D").count();
 System.out.println(count); // Output: 4
+
 3. What is the difference between collect() and toArray()?
 Feature	collect(Collectors.toList())	toArray()
 Return Type	List<T>	Object[]
 Usage	Converts stream to list	Converts stream to array
 Flexibility	Can use different collectors (Set, Map, etc.)	Only returns an array
+
 Example of collect()
-java
-Copy
-Edit
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -639,18 +699,16 @@ public class CollectExample {
     }
 }
 Example of toArray()
-java
-Copy
-Edit
+
 Object[] array = Stream.of("A", "B", "C").toArray();
 System.out.println(Arrays.toString(array)); // Output: [A, B, C]
+
+
 4. How to convert a Stream into a Map?
 The Collectors.toMap() method is used to convert a stream into a Map.
 
 Example
-java
-Copy
-Edit
+
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -667,9 +725,7 @@ Here, the key is the length of the string, and the value is the original string.
 5. Explain groupingBy() and partitioningBy() in Collectors
 1️⃣ groupingBy() – Groups elements based on a classifier function.
 
-java
-Copy
-Edit
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -683,9 +739,7 @@ public class GroupingByExample {
 }
 2️⃣ partitioningBy() – Splits elements into two groups (true/false).
 
-java
-Copy
-Edit
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -697,6 +751,7 @@ public class PartitioningByExample {
         System.out.println(partitioned); // Output: {false=[1, 3, 5], true=[2, 4, 6]}
     }
 }
+
 6. Can you use Stream API with primitive types?
 Yes, Java provides primitive specialization streams:
 
@@ -707,9 +762,7 @@ LongStream
 DoubleStream
 
 Example
-java
-Copy
-Edit
+
 import java.util.stream.IntStream;
 
 public class PrimitiveStreams {
@@ -718,15 +771,14 @@ public class PrimitiveStreams {
         System.out.println(sum); // Output: 15
     }
 }
+
 7. What is lazy evaluation in Streams?
 Intermediate operations (like map(), filter()) are not executed until a terminal operation (collect(), forEach()) is applied.
 
 This improves performance.
 
 Example
-java
-Copy
-Edit
+
 Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5)
                               .filter(n -> {
                                   System.out.println("Filtering " + n);
@@ -737,9 +789,6 @@ System.out.println("Before terminal operation");
 stream.forEach(System.out::println);
 Output
 
-mathematica
-Copy
-Edit
 Before terminal operation
 Filtering 1
 Filtering 2
@@ -755,15 +804,14 @@ Feature	Streams	Loops
 Readability	High	Moderate
 Parallel Execution	Yes (parallelStream)	No
 Performance	Slight overhead due to lazy evaluation	Faster for simple cases
+
 9. What are Parallel Streams?
 parallelStream() enables parallel execution of stream operations.
 
 Improves performance only for large datasets.
 
 Example
-java
-Copy
-Edit
+
 import java.util.stream.IntStream;
 
 public class ParallelStreamExample {
@@ -771,8 +819,10 @@ public class ParallelStreamExample {
         IntStream.range(1, 10).parallel().forEach(System.out::println);
     }
 }
+
 10. What are Short-Circuiting Operations?
-These operations terminate early without processing all elements: 1️⃣ limit(n) – Stops after n elements. 2️⃣ findFirst() – Returns the first matching element. 3️⃣ anyMatch() – Returns true if any element matches.
+These operations terminate early without processing all elements: 1️⃣ limit(n) – Stops after n elements.
+2️⃣ findFirst() – Returns the first matching element. 3️⃣ anyMatch() – Returns true if any element matches.
 
 Example
 
