@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP07;
+package udemy_Stream_Api.FP_07;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

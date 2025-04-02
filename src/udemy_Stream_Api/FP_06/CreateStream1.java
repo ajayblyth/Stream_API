@@ -1,4 +1,4 @@
-package udemy_Stream_Api.fpo6;
+package udemy_Stream_Api.FP_06;
 
 import java.util.Arrays;
 import java.util.List;

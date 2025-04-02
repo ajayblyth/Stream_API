@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP04;
+package udemy_Stream_Api.FP_04;
 
 
 import java.util.Arrays;

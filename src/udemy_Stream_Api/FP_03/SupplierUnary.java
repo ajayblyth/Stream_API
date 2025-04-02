@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP03;
+package udemy_Stream_Api.FP_03;
 
 import java.util.Random;
 import java.util.function.Supplier;

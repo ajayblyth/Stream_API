@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP08;
+package udemy_Stream_Api.FP_08;
 
 import java.util.ArrayList;
 import java.util.Arrays;

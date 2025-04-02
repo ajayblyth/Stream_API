@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP07;
+package udemy_Stream_Api.FP_07;
 
 import java.util.function.Function;
 //Note:  A higher-order function (HOF) is a function that does at least one of the following:

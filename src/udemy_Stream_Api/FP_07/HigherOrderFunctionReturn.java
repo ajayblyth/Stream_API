@@ -1,4 +1,4 @@
-package udemy_Stream_Api.FP07;
+package udemy_Stream_Api.FP_07;
 
 import java.util.function.Function;
 

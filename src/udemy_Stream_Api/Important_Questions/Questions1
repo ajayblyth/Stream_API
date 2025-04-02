@@ -1,4 +1,179 @@
 🔹 Basic Stream API Questions
+
+Intermeditae operations:
+ The operations that are performed on a stream and they return a stream are called intermediate operations.
+ e.g dinstinct(), sort(), map(), filter() etc.
+
+ Terminal operations:
+ they dont return a stream , even just void.
+
+ Example: forEach return void.
+ .reduce returns an integer.
+
+
+-----------------------------------------------------------------------------------
+
+Why is Functional Programming Considered Lazy?
+Functional programming (FP) is lazy because it delays computation until it is actually needed. This concept is known as lazy evaluation.
+Instead of executing every function immediately, FP constructs a promise to execute it later when required.
+
+
+example: ✔ The filter() function does not execute immediately. It only runs when forEach() (a terminal operation) is called.
+because of this performance is better as we are performing operations only when needed
+
+ ----------------------------------------------------------------------------------------------
+
+
+ 1️⃣ Static Method Reference (ClassName::staticMethod)
+ 👉 Used when referencing a static method of a class.
+ 👉 No need to create an object of the class.
+
+ ✅ Example:
+
+ class Utility {
+     public static String toUpperCase(String str) {
+         return str.toUpperCase();
+     }
+ }
+
+ public class StaticMethodReference {
+     public static void main(String[] args) {
+         List<String> words = List.of("java", "spring", "hibernate");
+
+         // Using static method reference
+         List<String> upperCaseWords = words.stream()
+                                            .map(Utility::toUpperCase) // Static method reference
+                                            .collect(Collectors.toList());
+
+         System.out.println(upperCaseWords);
+     }
+ }
+
+
+ Utility::toUpperCase is a reference to a static method.
+ It does not require an object of Utility.
+ Syntax: ClassName::staticMethod.
+ 2️⃣ Non-Static (Instance) Method Reference (object::instanceMethod)
+ 👉 Used when referencing an instance (non-static) method of a particular object.
+ 👉 Requires an object to call the method.
+
+ ✅ Example:
+
+
+ class Printer {
+     public String printWithExclamation(String str) {
+         return str + "!";
+     }
+ }
+
+ public class InstanceMethodReference {
+     public static void main(String[] args) {
+         List<String> words = List.of("Hello", "World", "Java");
+
+         Printer printer = new Printer(); // Creating an object
+
+         // Using instance method reference
+         words.forEach(printer::printWithExclamation); // Non-static method reference
+     }
+ }
+ 🔹 Key Points:
+ printer::printWithExclamation is a reference to an instance method.
+ Requires an object (printer) to call the method.
+ Syntax: object::instanceMethod.
+ 3️⃣ Non-Static Method Reference on a Class (ClassName::instanceMethod)
+ 👉 Used when referencing an instance method but without a specific object.
+ 👉 The method will be called on each element of the stream.
+
+ ✅ Example:
+
+ public class InstanceMethodRefOnClass {
+     public static void main(String[] args) {
+         List<String> words = List.of("hello", "world");
+
+         // Using instance method reference on a class
+         List<String> upperCaseWords = words.stream()
+                                            .map(String::toUpperCase) // Calling toUpperCase() on each string
+                                            .collect(Collectors.toList());
+
+         System.out.println(upperCaseWords);
+     }
+ }
+ 🖥 Output:
+
+ [HELLO, WORLD]
+ 🔹 Key Points:
+ String::toUpperCase is a reference to an instance method.
+ No specific object is provided; Java applies it to each element in the stream.
+ Syntax: ClassName::instanceMethod.
+
+
+ 🚀 When to Use Which?
+ ✔ Use static method reference when calling a utility/helper method (e.g., Math::max).
+ ✔ Use instance method reference when working with an already created object.
+ ✔ Use class instance method reference when calling methods on stream elements (String::toUpperCase).
+
+
+ ---------------------------------------------------------------------------------------
+
+Both statements create a list, but they have key differences in mutability and flexibility.
+
+1️⃣ Using new ArrayList<>(Arrays.asList(1,2,3,4))
+
+List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+
+✅ Mutable (e.g., add(), remove(), etc.).
+✅dynamically resizable.
+
+2️⃣ Using Arrays.asList(...) directly
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+⚠ Partially mutable:
+✅ You can modify elements (set(index, value)).
+❌ But you cannot add or remove elements (add(), remove(), etc.), because it's a fixed-size list.
+This happens because Arrays.asList() returns a fixed-size list backed by the original array.
+It is not a full ArrayList, but rather an internal static class (Arrays$ArrayList),
+which does not support structural modifications.
+
+
+Why is Arrays.asList() partially mutable but not resizable?
+Arrays.asList() creates a fixed-size list wrapper around an array.
+The underlying array is still mutable, so set(index, value) works, but resizing (add() / remove()) is not
+allowed because it would require changing the size of the underlying array, which is not supported.
+
+Example to Show the Difference
+
+        List<Integer> list1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+
+        List<Integer> list2 = Arrays.asList(1, 2, 3, 4, 5);
+
+        list1.add(6); // ✅ Works
+        System.out.println("list1 after add: " + list1);
+
+        // list2.add(6); // ❌ UnsupportedOperationException
+        // list2.remove(1); // ❌ UnsupportedOperationException
+
+        list2.set(0, 10); // ✅ Works (modifying existing element)
+        System.out.println("list2 after modification: " + list2);
+    }
+}
+
+--------------------------------------------
+ Breakdown of Your Code
+                                            List<String> locationsLength = locations.stream()
+                                                    .map(x -> x + " " + x.length()) // `x.length()` is an int
+                                                    .collect(Collectors.toList());
+
+                                            System.out.println(locationsLength);
+                                            x is a String.
+                                            x.length() returns an int.
+                                            x + " " + x.length():
+                                            The + operator first encounters " ", which is a String.
+                                            Since at least one operand is a String, Java automatically converts (x.length()) into a String.
+                                             The result is a new String that contains both the original string and its length.
+
+
+
 1. What is Java Stream API, and why is it used? and EXplain FUNCTIONAL PROGRAMMING?
 
 The Java Stream API (introduced in Java 8) processes collections efficiently, enabling operations like
@@ -384,30 +559,233 @@ b.) findAny() – Returns Any Element (Optimized for Parallel)
 
    -----------------------------------------------------------------------------------------------------------
  🔹 Intermediate Stream API Questions
-11. How does reduce() work in Java Streams?
-Explain reduction operations with examples (sum, max, concatenation).
-12. How to count elements in a Stream?
-Using count() method.
-13. What is the difference between collect() and toArray()?
-Explain collect(Collectors.toList()) vs toArray().
-14. How to convert a Stream into a Map?
-Use Collectors.toMap() to transform a list into a key-value mapping.
-15. Explain groupingBy() and partitioningBy() in Collectors.
-groupingBy() → Groups elements based on a classifier function.
-partitioningBy() → Splits elements into true/false groups.
-16. Can you use Stream API with primitive types?
-Discuss IntStream, LongStream, and DoubleStream.
-17. What is lazy evaluation in Streams?
-Explain how intermediate operations are not executed until a terminal operation is applied.
-18. What is the performance impact of using Streams vs traditional loops?
-Compare performance and when to prefer one over the other.
-🔹 Advanced Stream API Questions
-19. What are Parallel Streams, and how do they work?
-Discuss parallelStream(), when to use it, and potential issues (e.g., shared mutable state).
-20. Can you explain short-circuiting operations in Streams?
-Operations like limit(), findFirst(), and anyMatch() that terminate early.
+1. How does reduce() work in Java Streams?
+The reduce() method in Java Streams is a terminal operation used to reduce the stream elements into a single value. It performs a reduction operation such as summing numbers, finding the maximum, or concatenating strings.
 
-------------------------------------------------------------------------------------
+Syntax
+java
+Copy
+Edit
+T reduce(T identity, BinaryOperator<T> accumulator)
+identity – The initial value.
+
+accumulator – A function that combines two elements.
+
+Examples
+1️⃣ Sum of all numbers
+
+java
+Copy
+Edit
+import java.util.stream.Stream;
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        int sum = Stream.of(1, 2, 3, 4, 5)
+                        .reduce(0, (a, b) -> a + b); // Identity = 0, Accumulator = sum
+        System.out.println(sum); // Output: 15
+    }
+}
+2️⃣ Find the maximum value
+
+java
+Copy
+Edit
+import java.util.Optional;
+import java.util.stream.Stream;
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        Optional<Integer> max = Stream.of(4, 2, 8, 6)
+                                      .reduce(Integer::max);
+        System.out.println(max.get()); // Output: 8
+    }
+}
+3️⃣ Concatenating strings
+
+java
+Copy
+Edit
+String result = Stream.of("Java", "Streams", "Reduce")
+                      .reduce("", (a, b) -> a + " " + b);
+System.out.println(result.trim()); // Output: Java Streams Reduce
+2. How to count elements in a Stream?
+The count() method is a terminal operation that returns the number of elements in the stream.
+
+Example
+java
+Copy
+Edit
+long count = Stream.of("A", "B", "C", "D").count();
+System.out.println(count); // Output: 4
+3. What is the difference between collect() and toArray()?
+Feature	collect(Collectors.toList())	toArray()
+Return Type	List<T>	Object[]
+Usage	Converts stream to list	Converts stream to array
+Flexibility	Can use different collectors (Set, Map, etc.)	Only returns an array
+Example of collect()
+java
+Copy
+Edit
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class CollectExample {
+    public static void main(String[] args) {
+        List<String> list = Stream.of("A", "B", "C")
+                                  .collect(Collectors.toList());
+        System.out.println(list); // Output: [A, B, C]
+    }
+}
+Example of toArray()
+java
+Copy
+Edit
+Object[] array = Stream.of("A", "B", "C").toArray();
+System.out.println(Arrays.toString(array)); // Output: [A, B, C]
+4. How to convert a Stream into a Map?
+The Collectors.toMap() method is used to convert a stream into a Map.
+
+Example
+java
+Copy
+Edit
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class StreamToMapExample {
+    public static void main(String[] args) {
+        Map<Integer, String> map = Stream.of("apple", "banana", "cherry")
+                                         .collect(Collectors.toMap(String::length, str -> str));
+        System.out.println(map); // Output: {5=apple, 6=banana, 6=cherry}
+    }
+}
+Here, the key is the length of the string, and the value is the original string.
+
+5. Explain groupingBy() and partitioningBy() in Collectors
+1️⃣ groupingBy() – Groups elements based on a classifier function.
+
+java
+Copy
+Edit
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class GroupingByExample {
+    public static void main(String[] args) {
+        List<String> words = List.of("apple", "banana", "cherry", "date");
+        Map<Integer, List<String>> grouped = words.stream()
+                                                 .collect(Collectors.groupingBy(String::length));
+        System.out.println(grouped); // Output: {5=[apple], 6=[banana, cherry], 4=[date]}
+    }
+}
+2️⃣ partitioningBy() – Splits elements into two groups (true/false).
+
+java
+Copy
+Edit
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class PartitioningByExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+        Map<Boolean, List<Integer>> partitioned = numbers.stream()
+                                                        .collect(Collectors.partitioningBy(n -> n % 2 == 0));
+        System.out.println(partitioned); // Output: {false=[1, 3, 5], true=[2, 4, 6]}
+    }
+}
+6. Can you use Stream API with primitive types?
+Yes, Java provides primitive specialization streams:
+
+IntStream
+
+LongStream
+
+DoubleStream
+
+Example
+java
+Copy
+Edit
+import java.util.stream.IntStream;
+
+public class PrimitiveStreams {
+    public static void main(String[] args) {
+        int sum = IntStream.range(1, 6).sum(); // 1 + 2 + 3 + 4 + 5
+        System.out.println(sum); // Output: 15
+    }
+}
+7. What is lazy evaluation in Streams?
+Intermediate operations (like map(), filter()) are not executed until a terminal operation (collect(), forEach()) is applied.
+
+This improves performance.
+
+Example
+java
+Copy
+Edit
+Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5)
+                              .filter(n -> {
+                                  System.out.println("Filtering " + n);
+                                  return n % 2 == 0;
+                              });
+
+System.out.println("Before terminal operation");
+stream.forEach(System.out::println);
+Output
+
+mathematica
+Copy
+Edit
+Before terminal operation
+Filtering 1
+Filtering 2
+2
+Filtering 3
+Filtering 4
+4
+Filtering 5
+Filtering is applied only when needed.
+
+8. Performance Impact: Streams vs Loops
+Feature	Streams	Loops
+Readability	High	Moderate
+Parallel Execution	Yes (parallelStream)	No
+Performance	Slight overhead due to lazy evaluation	Faster for simple cases
+9. What are Parallel Streams?
+parallelStream() enables parallel execution of stream operations.
+
+Improves performance only for large datasets.
+
+Example
+java
+Copy
+Edit
+import java.util.stream.IntStream;
+
+public class ParallelStreamExample {
+    public static void main(String[] args) {
+        IntStream.range(1, 10).parallel().forEach(System.out::println);
+    }
+}
+10. What are Short-Circuiting Operations?
+These operations terminate early without processing all elements: 1️⃣ limit(n) – Stops after n elements. 2️⃣ findFirst() – Returns the first matching element. 3️⃣ anyMatch() – Returns true if any element matches.
+
+Example
+
+import java.util.stream.Stream;
+
+public class ShortCircuitingExample {
+    public static void main(String[] args) {
+        Stream.of(1, 2, 3, 4, 5)
+              .filter(n -> n % 2 == 0)
+              .limit(1)
+              .forEach(System.out::println); // Output: 2
+    }
+}-----------------------------------------------
 💡 Bonus: Practical Questions
 How to remove duplicates using Stream API?
 How to find the second-highest number in a list?
