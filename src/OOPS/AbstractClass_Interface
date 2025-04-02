@@ -1,0 +1,195 @@
+Abstract Class vs Interface in Java
+
+Both abstract classes and interfaces are used for abstraction in Java, but they have different features and use cases.
+
+Abstract Class
+An abstract class in Java is a class that cannot be instantiated(cant create object),  contain abstract methods (methods without a body)
+and concrete methods (methods with a body).
+
+Features of Abstract Class
+
+Partial Abstraction – It can have both abstract and concrete methods.
+
+Constructors – It can have constructors for initializing fields.
+
+Instance Variables – It can have both static and non-static variables.
+
+Access Modifiers – Methods can have any access modifier (public, protected, private).
+
+Inheritance – It supports single inheritance (a class can extend only one abstract class).
+
+Performance – Faster than interfaces because method calls are direct.
+
+Example of Abstract Class
+
+abstract class Animal {
+    String name;
+
+    // Abstract method (must be implemented by subclass)
+    abstract void makeSound();
+
+    // Concrete method
+    void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.makeSound(); // Bark
+        d.sleep();     // Sleeping...
+    }
+}
+Interface
+An interface in Java is a blueprint that contains only abstract methods (before Java 8) but can have default and static methods (since Java 8).
+
+Features of Interface
+Full Abstraction – It cannot have concrete methods (before Java 8).
+
+No Constructors – Cannot have constructors because it cannot hold state.
+
+Only Public Methods – Methods are public and abstract by default.
+
+Variables are Constants – All variables are public, static, and final by default.
+
+Multiple Inheritance – A class can implement multiple interfaces.
+
+Default & Static Methods (Java 8+) – Can have default and static methods with body.
+
+Example of Interface
+java
+Copy
+Edit
+interface Animal {
+    void makeSound(); // Abstract method
+}
+
+class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("Meow");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cat c = new Cat();
+        c.makeSound(); // Meow
+    }
+}
+Key Differences Between Abstract Class and Interface
+Feature	Abstract Class	Interface
+Methods	Can have both abstract and concrete methods	Can have only abstract methods (Java 7 & below). Java 8+ allows default and static methods.
+Variables	Can have instance variables (both static & non-static)	Only public, static, final (constants) variables.
+Constructors	Can have constructors.	Cannot have constructors.
+Access Modifiers	Methods can have any access modifier.	Methods are public by default.
+Multiple Inheritance	Supports single inheritance (extends one class).	Supports multiple inheritance (implements multiple interfaces).
+Performance	Faster (direct method calls).	Slower (uses dynamic method resolution).
+Default & Static Methods	Not applicable before Java 8.	Introduced in Java 8 (default & static methods).
+Use Case	Used when classes share common behavior.	Used to define a contract for implementation.
+When to Use What?
+Use Abstract Class when:
+
+You need to share common behavior across related classes.
+
+You need constructors or instance variables.
+
+You need some methods to have a default implementation.
+
+Use Interface when:
+
+You want to define a contract that multiple classes must follow.
+
+You need multiple inheritance (since a class can implement multiple interfaces).
+
+You want constants (as all fields in an interface are public static final).
+
+---------------------------------------------------------------------
+
+Summary: Abstract Class  vs Interface (Variables Handling)
+
+Feature         	 Abstract Class	                                  Interface
+Instance Variables	✅ Allowed (can be modified).	                  ❌ Not allowed.
+Static Variables	✅ Allowed (can be modified if not final).	      ✅ Allowed but always final (constant).
+Final Variables	    ❌ Not required to be final.	                  ✅ Always public static final.
+Access Modifiers	✅ Can be private, protected, or public.	      ❌ Always public.
+
+
+1. Abstract Class: Can Have Both Static and Non-Static Variables
+Abstract classes can declare and use both instance (non-static) and static variables.
+
+Instance variables can have different access modifiers (private, protected, etc.).
+
+Static variables can be modified (not necessarily final).
+
+Example: Abstract Class with Static & Non-Static Variables
+java
+Copy
+Edit
+abstract class Animal {
+    int age;  // Instance variable (non-static)
+    static String species = "Mammal"; // Static variable
+
+    abstract void makeSound();
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.age = 5;  // Allowed
+        System.out.println("Dog age: " + d.age);
+        System.out.println("Species: " + Dog.species); // Allowed
+    }
+}
+✅ Instance variables and static variables work normally in abstract classes.
+
+2. Interface: Only Public, Static, Final Variables
+All variables in an interface are implicitly:
+
+public (accessible everywhere).
+
+static (belong to the interface, not to instances).
+
+final (cannot be changed once assigned).
+
+Instance variables are not allowed in interfaces.
+
+Example: Interface Variables Are Always Static & Final
+
+interface Animal {
+    int age = 5;  // Implicitly public, static, and final
+    static String species = "Mammal";  // Explicitly static
+
+    void makeSound();
+}
+
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Animal.age = 10; // ❌ Error! Cannot modify final variable
+        System.out.println("Age: " + Animal.age);
+        System.out.println("Species: " + Animal.species); // Allowed
+    }
+}
+🚨 Key Differences:
+
+✅ Abstract class can have mutable instance variables and non-final static variables.
+
+❌ Interface variables are always final (constants) and cannot be modified.

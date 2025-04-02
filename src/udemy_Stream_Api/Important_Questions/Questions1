@@ -1,13 +1,14 @@
 🔹 Basic Stream API Questions
 
-Intermeditae operations:
+INTERMEDITAE OPERATIONS:
  The operations that are performed on a stream and they return a stream are called intermediate operations.
  e.g dinstinct(), sort(), map(), filter() etc.
 
- Terminal operations:
+ TERMINAL OPERATIONS:
  they dont return a stream , even just void.
 
- Example: forEach return void.
+ Example:
+ forEach returns void.
  .reduce returns an integer.
 
  example of intermediate:
@@ -19,13 +20,13 @@ Intermeditae operations:
 
  public class StreamMethodsExample {
      public static void main(String[] args) {
-         List<String> words = Arrays.asList("apple", "banana", "apple", "cherry", "blueberry", "avocado", "banana", "apricot");
+         List<String> words = Arrays.asList("apple", "banana", "Apple", "cherry", "blueberry", "avocado", "banana", "apricot");
 
          // 1. filter() - Keep words that start with 'a'
          List<String> filteredWords = words.stream()
-                 .filter(word -> word.startsWith("a"))
+                 .filter(word -> word.startsWith("a") || word.startsWith("A")
                  .collect(Collectors.toList());
-         System.out.println("Filtered (start with 'a'): " + filteredWords); // [apple, apple, avocado, apricot]
+         System.out.println("Filtered (start with 'a'): " + filteredWords); // [apple, Apple, avocado, apricot]
 
          // 2. map() - Convert all words to uppercase
          List<String> mappedWords = words.stream()
@@ -73,6 +74,16 @@ Intermeditae operations:
                  .skip(2)
                  .collect(Collectors.toList());
          System.out.println("Skipped (First 2 elements): " + skippedWords); // [apple, cherry, blueberry, avocado, banana, apricot]
+    //9 split()
+
+    String sentence = "what should i say, i dont know anything please continue without me";
+
+            List<String> words = Arrays.asList(sentence.split(" ")); // Split sentence into words
+
+            words.stream()
+                    .filter(word -> word.startsWith("w") || word.startsWith("W")) // Filter words starting with 'w' or 'W'
+                    .forEach(System.out::println);
+
      }
  }
 
@@ -80,7 +91,8 @@ Intermeditae operations:
 
 -----------------------------------------------------------------------------------
 
-Why is Functional Programming Considered Lazy?
+WHY IS FUNCTIONAL PROGRAMMING CONSIDERED LAZY?
+
 Functional programming (FP) is lazy because it delays computation until it is actually needed. This concept is known as lazy evaluation.
 Instead of executing every function immediately, FP constructs a promise to execute it later when required.
 
@@ -597,6 +609,8 @@ b.) Terminal Operations (Triggers Execution & Ends Stream)
 🚀 Now the stream processes the elements, as collect() is a terminal operation.
 
 ✔ Common pattern: stream() → intermediate ops → terminal op.
+
+
 
 10. Difference between findFirst() and findAny()?
 a.) findFirst() – Returns the First Element

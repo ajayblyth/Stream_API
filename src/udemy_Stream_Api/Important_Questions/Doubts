@@ -1,0 +1,53 @@
+What Does Collectors.joining() Do?
+Collectors.joining() is a terminal operation in the Java Stream API that concatenates elements of a stream into a single String.
+
+Syntax:
+
+Collectors.joining()                      // Joins without separator
+Collectors.joining("separator")           // Joins with a separator
+Collectors.joining("sep", "prefix", "suffix") // Joins with prefix & suffix
+
+Examples:
+1. Simple Joining (No Separator)
+
+List<String> words = List.of("Java", "Python", "C++");
+
+String result = words.stream()
+                     .collect(Collectors.joining());
+
+System.out.println(result);  // Output: "JavaPythonC++"
+
+2. Joining with a Separator
+
+String result = words.stream()
+                     .collect(Collectors.joining(", "));
+
+System.out.println(result);  // Output: "Java, Python, C++"
+
+3. Joining with a Separator, Prefix & Suffix
+
+String result = words.stream()
+                     .collect(Collectors.joining(", ", "[", "]"));
+
+System.out.println(result);  // Output: "[Java, Python, C++]"
+
+4. Joining Characters (Using chars())
+
+String str = "hello";
+String result = str.chars()
+                   .mapToObj(c -> String.valueOf((char) c))
+                   .collect(Collectors.joining("-"));
+
+System.out.println(result);  // Output: "h-e-l-l-o"
+
+==========================
+
+1️⃣ Alternative: String.join() (Without Streams)
+If you have a List or Array, you can use String.join() instead of Collectors.joining().
+
+
+List<String> words = List.of("Java", "Python", "C++");
+
+String result = String.join(", ", words);
+
+System.out.println(result);  // Output: "Java, Python, C++"
