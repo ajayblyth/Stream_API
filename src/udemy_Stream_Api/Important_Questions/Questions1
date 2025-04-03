@@ -56,6 +56,14 @@ INTERMEDITAE OPERATIONS:
                  .collect(Collectors.toList());
          System.out.println("Sorted (Alphabetically): " + sortedWords); // [apple, apple, apricot, avocado, banana, banana, blueberry, cherry]
 
+          // 5.1 sorted() - Sort words in reverse alphabetical order
+                 List<String> reverseSortedWords = words.stream()
+                         .sorted(Comparator.reverseOrder()) // Sort in descending order
+                         .collect(Collectors.toList());
+
+                 System.out.println("Sorted (Reverse Alphabetically): " + reverseSortedWords);
+                 // Output: [cherry, blueberry, banana, banana, apple, apple, apricot, avocado]
+
          // 6. peek() - Debugging intermediate stream
          List<String> peekedWords = words.stream()
                  .peek(word -> System.out.println("Processing: " + word))
@@ -132,12 +140,12 @@ because of this performance is better as we are performing operations only when 
  Utility::toUpperCase is a reference to a static method.
  It does not require an object of Utility.
  Syntax: ClassName::staticMethod.
+
  2️⃣ Non-Static (Instance) Method Reference (object::instanceMethod)
  👉 Used when referencing an instance (non-static) method of a particular object.
  👉 Requires an object to call the method.
 
  ✅ Example:
-
 
  class Printer {
      public String printWithExclamation(String str) {
@@ -159,6 +167,7 @@ because of this performance is better as we are performing operations only when 
  printer::printWithExclamation is a reference to an instance method.
  Requires an object (printer) to call the method.
  Syntax: object::instanceMethod.
+
  3️⃣ Non-Static Method Reference on a Class (ClassName::instanceMethod)
  👉 Used when referencing an instance method but without a specific object.
  👉 The method will be called on each element of the stream.
@@ -239,32 +248,33 @@ Example to Show the Difference
 
 --------------------------------------------
  Breakdown of Your Code
-                                            List<String> locationsLength = locations.stream()
-                                                    .map(x -> x + " " + x.length()) // `x.length()` is an int
-                                                    .collect(Collectors.toList());
 
-                                            System.out.println(locationsLength);
-                                            x is a String.
-                                            x.length() returns an int.
-                                            x + " " + x.length():
-                                            The + operator first encounters " ", which is a String.
-                                            Since at least one operand is a String, Java automatically converts (x.length()) into a String.
-                                             The result is a new String that contains both the original string and its length.
+List<String> locationsLength = locations.stream()
+                       .map(x -> x + " " + x.length()) // `x.length()` is an int
+                          .collect(Collectors.toList());
+
+             System.out.println(locationsLength);
+             x is a String.
+             x.length() returns an int.
+             x + " " + x.length():
+             Since at least one operand is a String, Java automatically converts (x.length()) into a String.
+             The result is a new String that contains both the original string and its length.
 
 
 
-1. What is Java Stream API, and why is it used? and EXplain FUNCTIONAL PROGRAMMING?
+1. What is Stream API, and why is it used? and explain FUNCTIONAL PROGRAMMING?
 
 The Java Stream API (introduced in Java 8) processes collections efficiently, enabling operations like
 filtering, mapping, and reducing in a more concise and readable way.
 
 Purpose of Stream API:
 
-The Stream API brings functional programming concepts like map, filter, reduce, and forEach into Java.
-Supports Lazy evaluation in which intermediate operations (like map() and filter()) are not executed
-immediately but only when a terminal operation (collect(), forEach(), etc.) is invoked. This improves performance.
+The Stream API brings FUNCTIONAL PROGRAMMING CONCEPTS LIKE MAP, FILTER, REDUCE, AND FOREACH into Java.
 
-Enables parallel processing with parallelStream().
+Supports LAZY EVALUATION in which intermediate operations (like map() and filter()) are not executed
+immediately but only when a terminal operation (collect(), forEach(), etc.) is invoked, improving performance.
+
+ENABLES PARALLEL PROCESSING with parallelStream().
 Helps in writing clean and less error-prone code.
 
 How it Helps with Functional Programming:
@@ -277,8 +287,10 @@ names.stream()
      .filter(name -> name.startsWith("A"))
      .forEach(System.out::println);
 
+------------------------------------------------------------------
+
 1(a). What is Functional Programming?
-Here we use functions to process data withoutchanging it directly. It avoids modifying variables and
+Here we use functions to PROCESS DATA WITHOUT CHANGING IT DIRECTLY. It avoids modifying variables and
 relies on pure functions and reusable functions that can be passed around like data.
 
 Key Features of Functional Programming in Java:
@@ -287,9 +299,11 @@ a).PURE FUNCTIONS→ Functions that do not modify state and return the same outp
 E.g : public static int square(int n) {
         return n * n;  // Always returns the same result for the same input
     }
+
 b.)IMMUTABILITY → Avoids changing existing data, focusing on creating new copies.
 
 c.)HIGHER ORDER FUNCTIONS → Functions that accept other functions as arguments or return them.
+
 E.g: public class Main {
          public static void main(String[] args) {
              Function<Integer, Integer> square = n -> n * n;  // Function to square a number
@@ -297,11 +311,56 @@ E.g: public class Main {
              System.out.println(applyFunction(5, square));    // Output: 25
          }
 
-         public static int applyFunction(int n, Function<Integer, Integer> func) {
-             return func.apply(n);  // Calls the passed function
+         public static int applyFunction(int n, Function<Integer, Integer> square) {
+             return square.apply(n);  // Calls the passed function
          }
      }
      ✅ applyFunction() is a higher-order function because it takes another function (square) as an argument.
+
+     EXAMPLE 2:
+
+     import java.util.function.*;
+
+     public class Main {
+         public static void main(String[] args) {
+             // 1️⃣ Function: Square a number
+             Function<Integer, Integer> square = n -> n * n;
+             System.out.println("Function (Square of 5): " + applyFunction(5, square));  // Output: 25
+
+             // 2️⃣ Predicate: Check if a number is even
+             Predicate<Integer> isEven = n -> n % 2 == 0;
+             System.out.println("Predicate (Is 10 even?): " + testPredicate(10, isEven));  // Output: true
+
+             // 3️⃣ Supplier: Generate a random number
+             Supplier<Double> randomSupplier = () -> Math.random();
+             System.out.println("Supplier (Random number): " + getSupplierValue(randomSupplier));
+
+             // 4️⃣ Consumer: Print a message
+             Consumer<String> messagePrinter = msg -> System.out.println("Consumer: " + msg);
+             consumeValue("Hello from Consumer!", messagePrinter);
+         }
+
+         // ✅ High Order Function for Function<T, R>
+         public static int applyFunction(int n, Function<Integer, Integer> func) {
+             return func.apply(n);
+         }
+
+         // ✅ High Order Function for Predicate<T>
+         public static boolean testPredicate(int n, Predicate<Integer> predicate) {
+             return predicate.test(n);
+         }
+
+         // ✅ High Order Function for Supplier<T>
+         public static double getSupplierValue(Supplier<Double> supplier) {
+             return supplier.get();
+         }
+
+         // ✅ High Order Function for Consumer<T>
+         public static void consumeValue(String msg, Consumer<String> consumer) {
+             consumer.accept(msg);
+         }
+     }
+
 
 d.)Declarative Style → Focuses on what to do rather than how to do it.
 
@@ -335,7 +394,8 @@ numbers.add(6);  // Allowed
 
 // Stream processes data, but original list remains unchanged
 Stream<Integer> stream = numbers.stream().map(n -> n * 2);
-🔹 Key takeaway: Collections are data containers, while Streams are data processors.
+
+🔹 KEY TAKEAWAY: COLLECTIONS ARE DATA CONTAINERS, WHILE STREAMS ARE DATA PROCESSORS.
 
 
 

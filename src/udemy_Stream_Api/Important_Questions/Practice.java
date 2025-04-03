@@ -1,7 +1,10 @@
 package udemy_Stream_Api.Important_Questions;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 /*
 filter() - How do you filter a list of words to keep only those that start with 'a'?
@@ -33,5 +36,20 @@ words.stream().filter(x->x.startsWith("a") || x.startsWith("A")).forEach(System.
         String sentence = " What is the effect of distinct() before or after sorting in a Stream pipeline";
         List<String> words1 = Arrays.asList(sentence.split(" "));
         words1.stream().filter(x->x.startsWith("d") || x.startsWith("p")).forEach(System.out::println);
+
+
+        //high order function
+
+        Function<Integer , Integer> square = n-> n*n;
+
+        System.out.println(applyFunction(5,square));
+
+
     }
+
+    private static int applyFunction(int n, Function<Integer, Integer> square) {
+        return square.apply(n);
+    }
+
+
 }
