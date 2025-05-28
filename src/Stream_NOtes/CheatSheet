@@ -1,0 +1,468 @@
+-------------------------- Java Streams Cheat Sheet --------------------------
+
+1. Creating Streams
+-------------------
+List<String> list = Arrays.asList("a", "b", "c");
+Stream<String> stream1 = list.stream();
+Stream<Integer> stream2 = Stream.of(1, 2, 3, 4);
+IntStream intStream = IntStream.range(1, 5);  // 1 to 4
+Stream<String> empty = Stream.empty();
+
+
+=============================================================================================
+1. list.stream()
+----------------------
+- Stream Type: Regular Stream (Object Stream)
+- Source: List (Collection)
+- Feature:
+    - Creates a Stream from a collection (List).
+    - Not parallel by default, can be converted with `.parallel()`.
+    - Backed by the original List; changes to the list can affect the stream.
+    - Non-blocking, does not affect the collection's state unless specified.
+    - Use case: For processing elements in a collection using Stream API.
+
+    Example:
+    List<String> list = Arrays.asList("a", "b", "c");
+    Stream<String> stream = list.stream();
+    stream.forEach(System.out::println);  // Output: a, b, c
+---------------------------------------------------------------
+
+2. Stream.of(...)
+----------------------
+- Stream Type: Regular Stream (Object Stream)
+- Source: Varied objects (multiple values)
+- Feature:
+    - Creates a stream from provided values directly.
+    - Can accept multiple arguments and create a stream from any object type.
+    - Non-parallel by default.
+    - Not backed by a collection, and immutable after creation.
+    - Use case: When you want to create a stream from a few known values.
+
+    Example:
+    Stream<Integer> stream = Stream.of(1, 2, 3, 4);
+    stream.forEach(System.out::println);  // Output: 1, 2, 3, 4
+---------------------------------------------------------------
+
+3. IntStream.range(start, end)
+------------------------------
+- Stream Type: Primitive Stream (IntStream)
+- Source: Range of primitive int values
+- Feature:
+    - Creates an **IntStream** from a specified range (inclusive start, exclusive end).
+    - Avoids boxing/unboxing, making it more memory-efficient for numeric operations.
+    - Provides special methods like `sum()`, `average()`, `reduce()`.
+    - Non-blocking.
+    - Use case: Efficient processing of numeric ranges.
+
+    Example:
+    IntStream intStream = IntStream.range(1, 5);
+    intStream.forEach(System.out::println);  // Output: 1, 2, 3, 4
+---------------------------------------------------------------
+
+4. Stream.empty()
+------------------------
+- Stream Type: Empty Stream (Object Stream)
+- Source: No elements (empty)
+- Feature:
+    - Creates an empty stream with no elements.
+    - Immutable and useful when you expect a stream but have no data to process.
+    - No further operations like `.forEach()` will perform any action.
+
+    Example:
+    Stream<String> emptyStream = Stream.empty();
+    emptyStream.forEach(System.out::println);  // No output
+---------------------------------------------------------------
+
+### Summary of Differences:
+---------------------------------------------------------------
+- **Stream Type**:
+    - `list.stream()` and `Stream.of(...)` create **regular object streams**.
+    - `IntStream.range(start, end)` creates a **primitive stream (IntStream)** for numbers.
+    - `Stream.empty()` creates an **empty stream** with no data.
+
+- **Data Type**:
+    - `list.stream()` and `Stream.of(...)` work with **object types**.
+    - `IntStream.range(...)` works with **primitive ints**.
+    - `Stream.empty()` is an **empty stream**.
+
+- **Immutability**:
+    - `Stream.of(...)` and `Stream.empty()` are **immutable**.
+    - `list.stream()` is **backed by the collection**, changes to the list can affect the stream.
+    - `IntStream.range(...)` is **immutable**.
+
+- **Use Case**:
+    - `list.stream()` processes elements from a collection.
+    - `Stream.of(...)` creates a stream from a few known values.
+    - `IntStream.range(...)` is for numeric range processing.
+    - `Stream.empty()` is used when you need an empty stream.
+---------------------------------------------------------------
+
+
+=============================================================================================
+2. Intermediate Operations (Lazy)
+---------------------------------
+.filter(p -> p.startsWith("a"))     // Filter by condition
+.map(String::toUpperCase)           // Transform elements
+.sorted()                           // Natural order
+.sorted(Comparator.reverseOrder())  // Custom sort
+.distinct()                         // Remove duplicates
+.limit(5)                           // First 5 elements
+.skip(3)                            // Skip first 3
+
+3. Terminal Operations (Eager)
+------------------------------
+.collect(Collectors.toList())       // To List
+.collect(Collectors.toSet())        // To Set
+.forEach(System.out::println)       // Print each
+.toArray()                          // To array
+.reduce("", String::concat)         // Reduce to one value
+.count()                            // Count elements
+.anyMatch(x -> x > 5)               // If any matches
+.allMatch(x -> x > 5)               // If all match
+.noneMatch(x -> x < 0)              // If none match
+.findFirst()                        // First element (Optional)
+.findAny()                          // Any element (Optional)
+
+4. Collectors
+-------------
+Collectors.toList()                         // List
+Collectors.toSet()                          // Set
+Collectors.joining(", ")                    // Join strings
+Collectors.groupingBy(String::length)       // Group by length
+Collectors.partitioningBy(s -> s.length()>3)// Partition by predicate
+Collectors.counting()                       // Count elements
+Collectors.averagingInt(String::length)     // Average by property
+Collectors.summingInt(String::length)       // Sum by property
+
+5. Primitive Streams
+--------------------
+IntStream.of(1, 2, 3).sum();                // Sum
+IntStream.range(1, 5).average();            // Average (OptionalDouble)
+IntStream.rangeClosed(1, 5).boxed()         // Box to Stream<Integer>
+
+6. Parallel Stream
+------------------
+list.parallelStream().filter(...).count();  // Multi-core processing
+
+7. Common Use Cases
+-------------------
+List<String> filtered = list.stream()
+  .filter(s -> s.length() > 3)
+  .map(String::toUpperCase)
+  .collect(Collectors.toList());
+
+int sum = Arrays.asList(1, 2, 3, 4).stream()
+  .mapToInt(Integer::intValue)
+  .sum();
+
+Map<Integer, List<String>> grouped = list.stream()
+  .collect(Collectors.groupingBy(String::length));
+
+-------------------------------------------------------------------------------
+
+
+------------------- Java Streams - Detailed Guide & Practice ------------------
+
+1. What is a Stream?
+---------------------
+- Stream is a sequence of elements supporting sequential and parallel operations.
+- It does NOT store data.
+- Uses functional programming features introduced in Java 8.
+
+2. Stream Pipeline (3 Stages)
+------------------------------
+Source -> Intermediate Ops -> Terminal Op
+
+Example:
+List<String> names = List.of("Alex", "Brian", "Charles");
+names.stream()
+     .filter(n -> n.startsWith("A"))
+     .map(String::toUpperCase)
+     .collect(Collectors.toList());
+
+3. Intermediate Operations (Lazy)
+---------------------------------
+- Return a new stream.
+- Do NOT trigger processing until terminal op.
+
+| Operation   | Description                           |
+|-------------|---------------------------------------|
+| filter()    | Include elements matching predicate   |
+| map()       | Transform each element                |
+| flatMap()   | Flatten nested streams                |
+| distinct()  | Remove duplicates                     |
+| sorted()    | Sort elements                         |
+| limit(n)    | Take first n elements                 |
+| skip(n)     | Skip first n elements                 |
+
+4. Terminal Operations (Eager)
+-------------------------------
+- Triggers processing of the pipeline.
+
+| Operation     | Description                              |
+|---------------|------------------------------------------|
+| collect()     | Convert stream to collection             |
+| forEach()     | Perform action for each element          |
+| reduce()      | Aggregate elements                       |
+| count()       | Count elements                           |
+| anyMatch()    | Check if any matches predicate           |
+| allMatch()    | Check if all match predicate             |
+| findFirst()   | Get first element (Optional)             |
+
+5. Primitive Streams
+---------------------
+- Specialized for int, long, double: `IntStream`, `LongStream`, `DoubleStream`
+- Avoid boxing/unboxing overhead.
+
+Example:
+int sum = IntStream.range(1, 5).sum();  // 1+2+3+4 = 10
+
+6. Parallel Streams
+---------------------
+- Use multiple threads internally.
+- Caution: Order not guaranteed. Best for large, independent operations.
+
+Example:
+list.parallelStream().filter(...).count();
+
+7. Common Collectors
+---------------------
+Collectors.toList(), toSet(), joining(), groupingBy(), partitioningBy(), counting(), summarizingInt()
+
+------------------------------------------------------------------------------
+
+Practice Problems
+------------------
+
+Q1. Filter names with length > 4 and convert to uppercase.
+Q2. Get the sum of squares of even numbers from a list.
+Q3. Given a list of words, group them by length.
+Q4. Find the first element that starts with "J".
+Q5. Sort a list of strings by their last character.
+Q6. Count words longer than 5 characters.
+Q7. Convert List<String> to comma-separated String.
+Q8. Partition a list of integers into even and odd.
+Q9. Given a list of objects (say, Employees), group by department.
+Q10. Find max/min/average salary from Employee list using stream.
+
+------------------------------------------------------------------------------
+
+Sample Use (Q1 Solution):
+--------------------------
+List<String> result = names.stream()
+   .filter(n -> n.length() > 4)
+   .map(String::toUpperCase)
+   .collect(Collectors.toList());
+
+-------------------------------------------------------------------------------
+
+
+--------------------- Java Streams with Custom Objects -----------------------
+
+Assume we have a class:
+-------------------------
+class Employee {
+    int id;
+    String name;
+    String dept;
+    double salary;
+
+    // constructor, getters
+}
+
+List<Employee> employees = List.of(
+    new Employee(1, "John", "HR", 30000),
+    new Employee(2, "Alice", "IT", 50000),
+    new Employee(3, "Bob", "HR", 35000),
+    new Employee(4, "David", "IT", 60000),
+    new Employee(5, "Eva", "Sales", 45000)
+);
+
+Examples:
+---------
+
+1. Filter employees with salary > 40000
+----------------------------------------
+List<Employee> highEarners = employees.stream()
+    .filter(e -> e.getSalary() > 40000)
+    .collect(Collectors.toList());
+
+2. Names of all employees in uppercase
+--------------------------------------
+List<String> names = employees.stream()
+    .map(e -> e.getName().toUpperCase())
+    .collect(Collectors.toList());
+
+3. Group employees by department
+--------------------------------
+Map<String, List<Employee>> grouped = employees.stream()
+    .collect(Collectors.groupingBy(Employee::getDept));
+
+4. Average salary by department
+-------------------------------
+Map<String, Double> avgSalary = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getDept,
+        Collectors.averagingDouble(Employee::getSalary)
+    ));
+
+5. Get highest-paid employee
+-----------------------------
+Optional<Employee> highestPaid = employees.stream()
+    .max(Comparator.comparingDouble(Employee::getSalary));
+
+6. Join all employee names with comma
+--------------------------------------
+String joined = employees.stream()
+    .map(Employee::getName)
+    .collect(Collectors.joining(", "));
+
+-------------------------------------------------------------------------------
+
+Real-World File Example (Reading CSV)
+--------------------------------------
+Suppose file: employees.csv
+Format: id,name,dept,salary
+
+Example:
+--------
+List<Employee> employees = Files.lines(Paths.get("employees.csv"))
+    .skip(1) // skip header
+    .map(line -> line.split(","))
+    .map(arr -> new Employee(
+        Integer.parseInt(arr[0]),
+        arr[1], arr[2], Double.parseDouble(arr[3])))
+    .collect(Collectors.toList());
+
+Now use any stream logic like above.
+
+-------------------------------------------------------------------------------
+
+Real-World Database Example (Using JDBC)
+-----------------------------------------
+Assume JDBC connection is set.
+
+List<Employee> employees = new ArrayList<>();
+try (Connection con = DriverManager.getConnection(...);
+     Statement stmt = con.createStatement();
+     ResultSet rs = stmt.executeQuery("SELECT * FROM employee")) {
+
+    while (rs.next()) {
+        employees.add(new Employee(
+            rs.getInt("id"),
+            rs.getString("name"),
+            rs.getString("dept"),
+            rs.getDouble("salary")));
+    }
+}
+
+// Now apply stream
+double avgSalary = employees.stream()
+    .mapToDouble(Employee::getSalary)
+    .average().orElse(0.0);
+
+-------------------------------------------------------------------------------
+
+--------------------- Java Streams - Domain-Specific Examples ---------------------
+
+1. STUDENT DOMAIN
+-------------------
+class Student {
+    int id;
+    String name;
+    String grade;
+    double marks;
+}
+
+List<Student> students = List.of(
+    new Student(1, "Arjun", "A", 88),
+    new Student(2, "Bhavna", "B", 76),
+    new Student(3, "Chirag", "A", 92),
+    new Student(4, "Divya", "C", 60),
+    new Student(5, "Esha", "B", 84)
+);
+
+// a. Top scoring student
+Optional<Student> topper = students.stream()
+    .max(Comparator.comparingDouble(Student::getMarks));
+
+// b. Average marks by grade
+Map<String, Double> avgMarks = students.stream()
+    .collect(Collectors.groupingBy(Student::getGrade,
+              Collectors.averagingDouble(Student::getMarks)));
+
+// c. List of names of A-grade students
+List<String> aGraders = students.stream()
+    .filter(s -> s.getGrade().equals("A"))
+    .map(Student::getName)
+    .collect(Collectors.toList());
+
+-----------------------------------------------------------------------------------
+
+2. ORDER DOMAIN
+----------------
+class Order {
+    int orderId;
+    String customer;
+    double amount;
+    boolean isDelivered;
+}
+
+List<Order> orders = List.of(
+    new Order(1, "Ravi", 2500, true),
+    new Order(2, "Sita", 1800, false),
+    new Order(3, "Amit", 3200, true),
+    new Order(4, "Geeta", 4100, false)
+);
+
+// a. Total amount of delivered orders
+double deliveredTotal = orders.stream()
+    .filter(Order::isDelivered)
+    .mapToDouble(Order::getAmount)
+    .sum();
+
+// b. Orders grouped by delivery status
+Map<Boolean, List<Order>> grouped = orders.stream()
+    .collect(Collectors.groupingBy(Order::isDelivered));
+
+// c. List of customer names sorted by amount (desc)
+List<String> sortedCustomers = orders.stream()
+    .sorted(Comparator.comparingDouble(Order::getAmount).reversed())
+    .map(Order::getCustomer)
+    .collect(Collectors.toList());
+
+-----------------------------------------------------------------------------------
+
+3. PRODUCT DOMAIN
+------------------
+class Product {
+    int id;
+    String name;
+    String category;
+    double price;
+    boolean inStock;
+}
+
+List<Product> products = List.of(
+    new Product(1, "Laptop", "Electronics", 55000, true),
+    new Product(2, "Chair", "Furniture", 3500, false),
+    new Product(3, "Pen", "Stationery", 20, true),
+    new Product(4, "Smartphone", "Electronics", 25000, true)
+);
+
+// a. Products in stock and cost > 1000
+List<Product> filtered = products.stream()
+    .filter(p -> p.isInStock() && p.getPrice() > 1000)
+    .collect(Collectors.toList());
+
+// b. Group products by category
+Map<String, List<Product>> byCategory = products.stream()
+    .collect(Collectors.groupingBy(Product::getCategory));
+
+// c. Most expensive product
+Optional<Product> expensive = products.stream()
+    .max(Comparator.comparingDouble(Product::getPrice));
+
+-----------------------------------------------------------------------------------
+
+Let me know if you want this saved later or want diagrams/real database/file integration too.

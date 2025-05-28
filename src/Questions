@@ -1,0 +1,72 @@
+JAVA 8 STREAM API - 50 MOST ASKED CODING QUESTIONS (NOTEPAD FORMAT)
+
+--- BASIC STREAM OPERATIONS ----------------------------------------------------
+ 1. Filter even numbers from a list of integers.
+ 2. Convert a list of strings to uppercase.
+ 3. Count how many strings in a list start with "A".
+ 4. Square each number in a list and collect to a new list.
+ 5. Check if any string in a list has length > 5.
+
+--- MAP, FILTER, REDUCE --------------------------------------------------------
+ 6. Find the sum of all numbers using Stream.reduce().
+ 7. From a list, filter strings >4 chars, convert to lower case.
+ 8. Find the longest string in a list using Stream.reduce().
+ 9. Get the product of all numbers in a list using reduce().
+10. Concatenate all strings from a list using reduce().
+
+--- COLLECTORS AND COLLECT -----------------------------------------------------
+11. Group a list of strings by their length.
+12. Partition a list of integers into even and odd numbers.
+13. Count frequency of each word in a list of strings.
+14. Get comma-separated string from a list of integers.
+15. Find duplicate elements in a list using grouping.
+
+--- SORTING AND CUSTOM COMPARATORS ---------------------------------------------
+16. Sort a list of strings in reverse order using Stream.
+17. Sort a list of employees by salary (custom object).
+18. Sort a map by values using stream and collect result.
+19. Get top 3 highest numbers from a list.
+20. Get lowest 5 elements from a list using limit/sorted.
+
+--- OPTIONAL, FINDFIRST, FINDANY, MATCHES --------------------------------------
+21. Find first string that starts with "J" in a list.
+22. Check if all elements in a list are positive.
+23. Check if no element in list is null or empty.
+24. Find any even number in a large list.
+25. Use Optional to avoid NullPointerException in stream.
+
+--- DISTINCT, LIMIT, SKIP, PEEK ------------------------------------------------
+26. Remove duplicates from a list of integers.
+27. Skip first 3 elements and return the rest.
+28. Return only the first 5 elements from a list.
+29. Print each element during processing using peek().
+30. Find 2nd highest number using skip() and distinct().
+
+--- FLATMAP AND NESTED STRUCTURES ----------------------------------------------
+31. Flatten a list of lists into a single list using flatMap().
+32. Given list of sentences, return list of unique words.
+33. From list of employees, get all unique project names.
+34. Convert Stream<String[]> to Stream<String> using flatMap().
+35. Group nested objects by a property using collectors.
+
+--- ADVANCED OPERATIONS AND CUSTOM OBJECTS -------------------------------------
+36. Given list of Employees, group by department.
+37. Find highest paid employee per department.
+38. Filter employees older than 30 and sort by name.
+39. Convert a list of Employee to Map<id, name>.
+40. Count number of employees in each location.
+
+--- PARALLEL STREAM, PERFORMANCE, EDGE CASES -----------------------------------
+41. Process large list of numbers using parallelStream().
+42. Difference in result: stream().findFirst() vs findAny().
+43. Handle null elements in stream safely.
+44. How to debug stream pipelines with peek().
+45. Stream that reads data from file and processes it.
+
+--- BONUS CHALLENGES AND INTERVIEW TRICKY ONES ---------------------------------
+46. Write a custom collector to join strings with delimiter.
+47. Reverse a list using stream only.
+48. Implement map() using reduce() method.
+49. Write a Stream-based palindrome checker.
+50. From stream of transactions, find highest by amount/date.
+

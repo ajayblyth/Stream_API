@@ -51,3 +51,11 @@ List<String> words = List.of("Java", "Python", "C++");
 String result = String.join(", ", words);
 
 System.out.println(result);  // Output: "Java, Python, C++"
+
+===============================
+
+Method               | Mutability     | Add/Remove | Set Elements | Null Allowed | Backed By Array
+--------------------|----------------|------------|--------------|--------------|----------------
+new ArrayList<>()   | Mutable        | Yes        | Yes          | Yes          | No
+Arrays.asList(...)  | Fixed-size     | No         | Yes          | Yes          | Yes
+List.of(...)        | Immutable      | No         | No           | No           | No
